@@ -9,5 +9,6 @@ namespace IOT_Project_OA.Model
 	 {
 		 public Guid  J_ID { get; set; }
 		 public string  Meni_Name { get; set; }
-	 }
+		public Guid Up_ID { get; set; }
+	}
 }

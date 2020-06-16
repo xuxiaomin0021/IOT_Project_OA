@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace IOT_Project_OA.Model
 {
-	 public class Base_Assete_FilesModel
+	 public class Base_Assete_Files
 	 {
 		 public Guid  Assets_ID { get; set; }
 		 public int  Assets_No { get; set; }

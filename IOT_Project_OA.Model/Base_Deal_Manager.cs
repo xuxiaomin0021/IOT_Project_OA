@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace IOT_Project_OA.Model
 {
-	 public class Base_Deal_ManagerModel
+	 public class Base_Deal_Manager
 	 {
 		 public Guid  Business_ID { get; set; }
 		 public Guid  Customer_ID { get; set; }

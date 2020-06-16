@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace IOT_Project_OA.Model
 {
-	 public class Base_Emp_InformationModel
+	 public class Base_Emp_Information
 	 {
 		 public Guid  Emp_ID { get; set; }
 		 public string  Entry_Time { get; set; }

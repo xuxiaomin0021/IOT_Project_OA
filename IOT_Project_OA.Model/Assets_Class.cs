@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace IOT_Project_OA.Model
 {
-	 public class Assets_ClassModel
+	 public class Assets_Class
 	 {
 		 public int  Asset_TypeID { get; set; }
 		 public string  Class_Name { get; set; }

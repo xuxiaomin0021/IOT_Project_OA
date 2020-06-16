@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace IOT_Project_OA.Model
 {
-	 public class Base_Organizational_StructureModel
+	 public class Base_Organizational_Structure
 	 {
 		 public Guid  O_ID { get; set; }
 		 public string  Superior_Deptment { get; set; }

@@ -5,10 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 namespace IOT_Project_OA.Model
 {
-	 public class Base_RoleModel
+	 public class Base_jurisdiction
 	 {
-		 public Guid  Role_ID { get; set; }
-		 public string  Role_Name { get; set; }
-		 public string  Role_Desc { get; set; }
+		 public Guid  J_ID { get; set; }
+		 public string  Meni_Name { get; set; }
 	 }
 }

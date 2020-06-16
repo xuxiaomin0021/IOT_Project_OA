@@ -5,10 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 namespace IOT_Project_OA.Model
 {
-	 public class Base_SignModel
+	 public class Base_Visit_Record
 	 {
-		 public Guid  Sign_ID { get; set; }
+		 public Guid  Record_ID { get; set; }
 		 public Guid  Customer_ID { get; set; }
-		 public string  Remarks { get; set; }
+		 public int  Wai_Count { get; set; }
+		 public int  All_Count { get; set; }
+		 public int  Abnormal_Count { get; set; }
 	 }
 }

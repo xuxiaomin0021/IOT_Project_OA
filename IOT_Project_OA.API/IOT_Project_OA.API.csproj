@@ -8,5 +8,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\IOT_Project_OA.BLL\IOT_Project_OA.BLL.csproj" />
+    <ProjectReference Include="..\IOT_Project_OA.Model\IOT_Project_OA.Model.csproj" />
+  </ItemGroup>
+
 
 </Project>

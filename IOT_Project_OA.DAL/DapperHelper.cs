@@ -140,5 +140,22 @@ namespace IOT_Project_OA.DAL
             }
         }
 
+        public static int DeleteData<T>(T model) where T:class,new()
+        {
+            using (IDbConnection conn = new SqlConnection() { ConnectionString = connectionString })
+            {
+                Type t = model.GetType();
+                PropertyInfo[] property = t.GetProperties();
+                string sql = $"delete from {t.Name} ";
+                foreach (var item in property)
+                {
+                    if(!string.IsNullOrEmpty(item.GetValue(model).ToString()))
+                    {
+                        sql += $" where {item.Name} = '{item.GetValue(model)}'";
+                    }
+                }
+                return conn.Execute(sql);
+            }
+        }
     }
 }

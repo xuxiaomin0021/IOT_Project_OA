@@ -13,7 +13,7 @@ namespace IOT_Project_OA.DAL
 
     public class DapperHelper
     {
-        private const string connectionString = "Data Source=.;Initial Catalog=PRODUCTDB;Integrated Security=True";
+        private const string connectionString = "Data Source=192.168.0.111;Initial Catalog=OA_Object;User ID=sa;PassWord=1234";
 
         /// <summary>
         /// 获取集合

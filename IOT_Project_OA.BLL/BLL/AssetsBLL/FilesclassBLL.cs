@@ -1,15 +1,22 @@
-﻿using IOT_Project_OA.DAL.IDAL.AssetsIDAL;
+﻿using IOT_Project_OA.BLL.IBLL.AssetsIBLL;
 using IOT_Project_OA.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using IOT_Project_OA.Model;
+using IOT_Project_OA.DAL;
+using IOT_Project_OA.DAL.IDAL.AssetsIDAL;
 
-namespace IOT_Project_OA.DAL.DAL.AssetsDAL
+namespace IOT_Project_OA.BLL.BLL.AssetsBLL
 {
-    public class FilesclassDAL : FilesclassIDAL
+    public class FilesclassBLL : FilesclassIBLL
     {
-        DapperHelper dapper = new DapperHelper();
+        //依赖注入
+        private FilesclassIDAL _filesclassDal;
+        public FilesclassBLL(FilesclassIDAL filesclassDal)
+        {
+            _filesclassDal = filesclassDal;
+        }
+
         /// <summary>
         /// 添加资产类别
         /// </summary>
@@ -17,7 +24,7 @@ namespace IOT_Project_OA.DAL.DAL.AssetsDAL
         /// <returns></returns>
         public int AddFilesClass(Assets_Class classModel)
         {
-            return dapper.AddData<Assets_Class>(classModel);
+            return _filesclassDal.AddFilesClass(classModel);
         }
 
         /// <summary>
@@ -27,16 +34,17 @@ namespace IOT_Project_OA.DAL.DAL.AssetsDAL
         /// <returns></returns>
         public int DeleteFilesClass(Assets_Class classId)
         {
-            return dapper.DeleteData<Assets_Class>(classId);
+            return _filesclassDal.DeleteFilesClass(classId);
         }
 
+
         /// <summary>
-        /// 显示所有的资产类别
+        /// 显示所有的资产信息
         /// </summary>
         /// <returns></returns>
         public List<Assets_Class> GetClassData()
         {
-            return dapper.GetToList<Assets_Class>();
+            return _filesclassDal.GetClassData();
         }
     }
 }

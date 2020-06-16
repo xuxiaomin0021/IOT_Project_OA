@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using IOT_Project_OA.DAL;
 using IOT_Project_OA.Model;
 
-namespace IOT_Project_OA.DAL.IDAL.AssetsIDAL
+namespace IOT_Project_OA.BLL.IBLL.AssetsIBLL
 {
-    public interface FilesclassIDAL
+    public interface FilesclassIBLL
     {
         /// <summary>
         /// 添加类型

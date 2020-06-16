@@ -9,6 +9,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using IOT_Project_OA.DAL;
+using IOT_Project_OA.BLL;
+using IOT_Project_OA.BLL.IBLL.AssetsIBLL;
+using IOT_Project_OA.BLL.BLL.AssetsBLL;
 
 namespace IOT_Project_OA.API
 {
@@ -38,6 +42,9 @@ namespace IOT_Project_OA.API
                             .AllowCredentials();
                 });
             });
+            //×Ê²úµµ°¸
+            services.AddSingleton<FilesclassIBLL, FilesclassBLL>();
+            services.AddSingleton<FilesIBLL, FilesBLL>();
 
         }
 

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace IOT_Project_OA.Model
 {
+	//城市地址表
 	 public class Base_City
 	 {
 		 public int  City_ID { get; set; }

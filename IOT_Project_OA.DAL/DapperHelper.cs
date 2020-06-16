@@ -21,14 +21,14 @@ namespace IOT_Project_OA.DAL
         /// <typeparam name="T">类类型</typeparam>
         /// <param name="sql">sql语句</param>
         /// <returns></returns>
-        public static List<T> GetToList<T>(string sql) where T : class, new()
+        public static List<T> GetToList<T>() where T : class, new()
         {
-            List<T> list = new List<T>();
             using (IDbConnection conn = new SqlConnection() { ConnectionString = connectionString })
             {
-                list = conn.Query<T>(sql).ToList();
+                Type t = typeof(T);
+                string sql = $"select * from {t.Name}";
+                return conn.Query<T>(sql).ToList();
             }
-            return list;
         }
 
         /// <summary>
@@ -140,6 +140,12 @@ namespace IOT_Project_OA.DAL
             }
         }
 
+        /// <summary>
+        /// 反射删除
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="model">将要删除的记录的ID存在model中</param>
+        /// <returns></returns>
         public static int DeleteData<T>(T model) where T:class,new()
         {
             using (IDbConnection conn = new SqlConnection() { ConnectionString = connectionString })

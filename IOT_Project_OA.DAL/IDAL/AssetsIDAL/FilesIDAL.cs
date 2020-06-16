@@ -16,7 +16,7 @@ namespace IOT_Project_OA.DAL.IDAL.AssetsIDAL
         /// <param name="whereStr">查询条件</param>
         /// <param name="pageIndex">页码</param>
         /// <returns></returns>
-        public ProcDataAndTotal<Base_Assete_Files> ProcPageData(string tableName,string orderField,string whereStr,int pageIndex);
+        public ProcDataAndTotal<Base_Assete_Files> ProcPageData(string whereStr,int pageIndex);
 
 
         /// <summary>
@@ -25,6 +25,24 @@ namespace IOT_Project_OA.DAL.IDAL.AssetsIDAL
         /// <param name="files">资产档案model存取ID</param>
         /// <returns></returns>
         public int DeleteFiles(Base_Assete_Files files);
+
+
+        /// <summary>
+        /// 详情获取一条数据
+        /// </summary>
+        /// <param name="Id">获取的数据的id</param>
+        /// <returns></returns>
+        public Base_Assete_Files GetFirstData(string Id);
+
+
+        /// <summary>
+        /// 添加一条资产档案
+        /// </summary>
+        /// <param name="model">获取到的model</param>
+        /// <returns></returns>
+        public int InsertFiles(Base_Assete_Files model);
+
+
 
         
     }

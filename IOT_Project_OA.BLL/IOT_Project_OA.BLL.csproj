@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="IBLL\" />
-    <Folder Include="BLL\" />
+    <ProjectReference Include="..\IOT_Project_OA.DAL\IOT_Project_OA.DAL.csproj" />
+    <ProjectReference Include="..\IOT_Project_OA.Model\IOT_Project_OA.Model.csproj" />
   </ItemGroup>
 
 </Project>

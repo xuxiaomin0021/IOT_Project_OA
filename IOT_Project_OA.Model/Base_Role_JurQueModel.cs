@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 namespace IOT_Project_OA.Model
 {
-	 public class Base_CityModel
+	 public class Base_Role_JurQueModel
 	 {
-		 public int  City_ID { get; set; }
-		 public string  City_Name { get; set; }
-		 public int  Up_ID { get; set; }
+		 public Guid  ID { get; set; }
+		 public Guid  Role_ID { get; set; }
+		 public Guid  J_ID { get; set; }
 	 }
 }

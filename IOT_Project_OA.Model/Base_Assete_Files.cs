@@ -35,5 +35,11 @@ namespace IOT_Project_OA.Model
 		 public decimal  Bill_Money { get; set; }
 		//发票日期
 		 public string  Bill_Time { get; set; }
-	 }
+		//资产名称
+		public string Assets_Name { get; set; }
+		//资产状态
+		public string State { get; set; }
+		//资产使用人
+		public string Use_Person { get; set; }
+	}
 }

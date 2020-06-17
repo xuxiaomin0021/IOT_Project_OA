@@ -23,8 +23,11 @@ namespace IOT_Project_OA.BLL.BLL.AssetsBLL
         /// </summary>
         /// <param name="files"></param>
         /// <returns></returns>
-        public int DeleteFiles(Base_Assete_Files files)
+        public int DeleteFiles(string Id)
         {
+            Base_Assete_Files files = new Base_Assete_Files() { 
+            Assets_ID = Guid.Parse(Id)
+            };
             return _filesDal.DeleteFiles(files);
         }
 

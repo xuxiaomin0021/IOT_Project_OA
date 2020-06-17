@@ -20,7 +20,7 @@ namespace IOT_Project_OA.BLL.IBLL.AssetsIBLL
         /// </summary>
         /// <param name="classId">删除类型的model存ID</param>
         /// <returns></returns>
-        public int DeleteFilesClass(Assets_Class classId);
+        public int DeleteFilesClass(string Id);
 
 
         /// <summary>

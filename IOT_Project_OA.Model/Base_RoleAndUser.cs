@@ -7,8 +7,8 @@ namespace IOT_Project_OA.Model
 {
 	 public class Base_RoleAndUser
 	 {
-		 public Guid  ID { get; set; }
-		 public Guid  User_ID { get; set; }
-		 public Guid  Role_ID { get; set; }
+		 public int  ID { get; set; }
+		 public int Role_ID { get; set; }
+		 public int User_ID { get; set; }
 	 }
 }

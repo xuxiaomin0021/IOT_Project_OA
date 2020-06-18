@@ -8,7 +8,14 @@ namespace IOT_Project_OA.View.Controllers.AssetsFiles
 {
     public class FilesController : Controller
     {
+        //显示
         public IActionResult ShowFiles()
+        {
+            return View();
+        }
+
+        //添加
+        public IActionResult AddFiles()
         {
             return View();
         }

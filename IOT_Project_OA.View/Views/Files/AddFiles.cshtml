@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewData["Title"] = "AddFiles";
+}
+
+<h3 style="text-align:center">创建资产信息</h3>
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">资产名称</label>
+        <div class="layui-input-inline">
+            <input type="text" id="Assets_Name" lay-verify="required" lay-reqtext="资产名称是必填项，岂能为空？" placeholder="请输入" autocomplete="off" class="layui-input">
+        </div>
+        <span style="color:red">*</span>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">资产编号</label>
+        <div class="layui-input-block">
+            <input type="text" id="Assets_No" lay-verify="required" lay-reqtext="资产编号是必填项，岂能为空？" placeholder="请输入" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">单行输入框</label>
+        <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+        </div>
+    </div>
+
+</form>

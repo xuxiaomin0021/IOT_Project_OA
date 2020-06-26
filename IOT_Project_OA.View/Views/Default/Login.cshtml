@@ -1,0 +1,193 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+    <link href="~/layuiadmin/style/admin.css" rel="stylesheet" />
+    <style type="text/css">
+        #code {
+            font-family: Arial;
+            font-style: italic;
+            font-weight: bold;
+            border: 0;
+            letter-spacing: 2px;
+            color: blue;
+        }
+
+        .tilie {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 50px;
+        }
+
+        .div1 {
+            margin-left: 700px;
+        }
+
+        .tilie {
+            text-align: center;
+        }
+
+        .layui-code {
+            position: relative;
+            margin-top: -12px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <img src="~/Images/sso-2.svg" title="OA登录系统" style="width: 500px;
+        height: 500px;
+        margin-left: 650px;" />
+    <div class="div1">
+        <div class="total">
+            <div class="register-content register-content_j">
+                <div class="register-text" id="register-two">
+                    <form class="layui-form" action="" lay-filter="example">
+                        <div class="text-reg text-reg_j">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">用户名</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" value="Admin" id="loginName" name="username" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">密码</label>
+                                <div class="layui-input-inline">
+                                    <input id="password" value="123456" type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">请务必填写用户名</div>
+                            </div>
+                            <div>
+                                <!----描述：输入框ct100_textcode -->
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">验证码</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="number" id="ctl00_txtcode" placeholder="请输入验证码" lay-verify="required|number" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <!---- 描述：把验证码定义为按钮，点击刷新-->
+                                <input type="button" class="layui-code" id="code" onclick="createCode()" />
+                            </div>
+                        </div>
+                        <!--描述：登录验证按钮 -->
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <input type="button" class="layui-btn" lay-submit="" onclick="validate()" value="登 录" />
+                                <input type="button" class="layui-btn" lay-submit="" onclick="Registerdate()" value="注 册" />
+                            </div>
+                            <div>
+                                <br />用户名/密码<label>Admin/123456&nbsp;&nbsp;&nbsp;System/123456&nbsp;&nbsp;&nbsp;Test/Test</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    //注册
+    function Registerdate() {
+        window.location.href = "/Default/Register";
+    }
+    //产生验证码
+    window.onload = function () {
+        createCode();
+    }
+    var code; //在全局定义验证码
+    function createCode() {
+        code = "";
+        var codeLength = 4; //验证码的长度
+        var checkCode = document.getElementById("code");
+        var random = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
+
+            'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'); //随机数
+
+        for (var i = 0; i < codeLength; i++) { //循环操作
+
+            var index = Math.floor(Math.random() * 36); //取得随机数的索引（0~35）
+
+            code += random[index]; //根据索引取得随机数加到code上
+        }
+        checkCode.value = code; //把code值赋给验证码
+    }
+    //校验验证码
+    function validate() {
+
+        var inputCode = document.getElementById("ctl00_txtcode").value.toUpperCase(); //获取输入框内验证码并转化为大写
+
+        if (inputCode.length <= 0) { //若输入的验证码长度为0
+
+            alert("请输入验证码！"); //则弹出请输入验证码
+
+        }
+
+        else if (inputCode != code) { //若输入的验证码与产生的验证码不一致时
+
+            alert("验证码输入错误!"); //则弹出验证码输入错误
+
+            createCode(); //刷新验证码
+
+            document.getElementById("ctl00_txtcode").value = "";//清空文本框
+
+        } else {
+            //输入正确时开始登陆
+            Login();
+        }
+    }
+    function Login() {
+        var obj =
+        {
+            "User_Name": $("#loginName").val(),
+            "User_Pwd": $("#password").val()
+        };
+        //用户名为空判断
+        if (obj.User_Name == null || obj.User_Name == undefined || obj.User_Name == "") {
+
+            alert("用户名不能为空");
+            return;
+        }
+        if (obj.User_Pwd == null || obj.User_Pwd == undefined || obj.User_Pwd == "") {
+            alert("密码不能为空");
+            return;
+        }
+        $.ajax({
+            url: 'http://localhost:49233/api/UserLogin/Login',
+            type: 'post',
+            dataType: 'text',
+            contentType: 'application/x-www-form-urlencoded',
+            accepts: 'application/x-www-form-urlencoded',
+            data: obj,
+            success: function (data) {
+                if (data!=null) {
+                    localStorage.setItem["User_Name", obj.User_Name];
+                    localStorage["User_Name"] = data;
+                    window.location.href = "http://localhost:49236/Default/Index";
+                    alert("登录成功");
+                }
+                else {
+                    Reload();
+                    alert("请先注册后再登录");
+                    window.location.href = "/Default/Register";
+                }
+            }
+        })
+    }
+    function Reload() {
+        createCode(); //刷新验证码
+        document.getElementById("ctl00_txtcode").value = "";//清空文本框
+
+        document.getElementById("loginName").value = "";
+        document.getElementById("password").value = "";
+    }
+
+</script>
+
+
+
+
+
+
+

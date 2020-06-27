@@ -111,6 +111,14 @@
                 alert('请输入角色姓名!');
                 return;
             }
+            if (obj.Q_ids == "") {
+                if (confirm('确认给该角色无权限嘛?')) {
+
+                } else {
+                    alert('角色授权失败!');
+                    return;
+                }
+            }
             $.ajax({
                 url: "http://localhost:49233/api/ToAllocate/RegisterRole",
                 type: "post",

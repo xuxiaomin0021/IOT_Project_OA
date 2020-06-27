@@ -33,6 +33,11 @@ namespace IOT_Project_OA.View.Controllers
             return View();
         }
 
+        public IActionResult RegisterUserAndRole(string user_Name)
+        {
+            ViewBag.user_Name = user_Name;
+            return View();
+        }
 
 
         //登录

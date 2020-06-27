@@ -59,6 +59,8 @@ namespace IOT_Project_OA.API
             services.AddSingleton<ILoginBll, LoginBll>();
             services.AddSingleton<IEmpBLLInterface,EmpBLL>();
             services.AddSingleton<IEmpDAL, EmpDAL>();
+            services.AddSingleton<IRegisterBLL, RegisterBLL>();
+            services.AddSingleton<IRegisterDal, RegisterDal>();
 
         }
 

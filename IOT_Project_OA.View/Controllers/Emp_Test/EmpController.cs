@@ -25,6 +25,12 @@ namespace IOT_Project_OA.View.Controllers.Emp_Test
         {
             return View();
         }
+        //创建角色
+        public IActionResult CreateRole() 
+        {
+            return View();
+        }
+        
 
     }
 }

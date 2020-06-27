@@ -12,6 +12,8 @@ namespace IOT_Project_OA.View.Controllers
         {
             return View();
         }
+
+
         /// <summary>
         /// 我的桌面
         /// </summary>
@@ -20,6 +22,8 @@ namespace IOT_Project_OA.View.Controllers
         {
             return View();
         }
+
+
         /// <summary>
         /// 注册
         /// </summary>
@@ -28,10 +32,15 @@ namespace IOT_Project_OA.View.Controllers
         {
             return View();
         }
+
+
+
         //登录
         public IActionResult Login()
         {
             return View();
         } 
+
+
     }
 }

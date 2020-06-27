@@ -10,6 +10,7 @@ using System.Reflection;
 using WebApplication72.Models;
 using IOT_Project_OA.Model;
 using Newtonsoft.Json;
+using System.Reflection.Metadata.Ecma335;
 
 namespace IOT_Project_OA.DAL
 {
@@ -30,10 +31,21 @@ namespace IOT_Project_OA.DAL
             using (IDbConnection conn = new SqlConnection() { ConnectionString = connectionString })
             {
                 Type t = typeof(T);
-                string sql = $"select * from {t.Name}";
-                return conn.Query<T>(sql).ToList();
+                string sql = "";
+                //if (t.Name == "Base_Quan")
+                //{
+                //  sql  = $"select * from {t.Name} where up_id = 0";
+                //}
+                //else
+                //{
+                //    sql = $"select * from {t.Name}";
+               // }
+            sql = $"select * from {t.Name}";
+            return conn.Query<T>(sql).ToList();
             }
         } 
+
+
         /// <summary>
         /// 获取单条信息
         /// </summary>
@@ -154,7 +166,12 @@ namespace IOT_Project_OA.DAL
                 PropertyInfo[] property = t.GetProperties();
                 foreach (var item in property)
                 {
+                    if (item.Name.Equals("ID") || item.Name.Equals("User_ID"))
+                    {
+                        continue;
+                    }
                     stringBuilder.Append($"'{item.GetValue(model)}',");
+                    //stringBuilder.Append($"'{item.GetValue(model)}',");
                 }
                 string sql = stringBuilder.ToString().Substring(0, stringBuilder.Length - 1) + ")";
                 return conn.Execute(sql);

@@ -1,0 +1,186 @@
+﻿
+@{
+    ViewData["Title"] = "EditEmp";
+}
+
+<script src="~/layui-v2.5.6/layui/layui.js"></script>
+<link href="~/layui-v2.5.6/layui/css/layui.css" rel="stylesheet" />
+<script src="~/js/site.js"></script>
+
+<table class="layui-table">
+    <tr>
+        <td>员工编号</td>
+        <td>
+            <input type="text" id="Emp_ID" value="@ViewBag.id" disabled="disabled" style="width:300px" />
+        </td>
+    </tr>
+    <tr>
+        <td>员工姓名</td>
+        <td> 
+            <input type="text" id="Emp_Name" disabled="disabled"  style="width:300px"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            员工部门
+        </td>
+        <td>
+            <select id="Emp_Dept">
+                <option value="-1">请选择</option>
+                <option value="开发部">开发部</option>
+                <option value="行政部">行政部</option>
+                <option value="财务部">财务部</option>
+                <option value="销售部">销售部</option>
+                <option value="市场部">市场部</option>
+                <option value="人事部">人事部</option>
+                <option value="科技部">科技部</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            员工岗位
+        </td>
+        <td>
+            <select id="Emp_Post">
+                <option value="-1">请选择</option>
+                <option value="部门主管">部门主管</option>
+                <option value="部门经理">部门经理</option>
+                <option value="部门组长">部门组长</option>
+                <option value="部门员工">部门员工</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>手机号码:</td>
+        <td>
+            <input type="text" id="Phone" style="width:300px" onblur="Panduan()" />
+            <span id="editPhone" style="color:red">*</span>
+        </td>
+    </tr>
+    <tr>
+        <td>健康状况</td>
+        <td>
+            <select id="Health">
+                <option value="-1">请选择</option>
+                <option value="健康">健康</option>
+                <option value="良好">良好</option>
+                <option value="差">差</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="button" value="修改" id="editeEmp"  class="btn-primary"/>
+        </td>
+        <td>
+            <input type="button" value="返回" id="reset" class="btn-danger" />
+        </td>
+    </tr>
+</table>
+
+
+
+<script>
+    //页面加载事件
+    $(function () {
+        var id = $("#Emp_ID").val();
+        $.ajax({
+            url: "http://localhost:49233/api/Emp/GetEmpModel",
+            type: "get",
+            dataType: "json",
+            data: { id: id },
+            success: function (data) {
+                if (data == null) {
+                    alert('无法进行编辑');
+                    history.back();
+                } else {
+                    FanTian(data);
+                }
+            }
+        });
+
+    });
+
+    //反填数据
+    function FanTian(obj) {
+        $("#Emp_Name").val(obj.emp_Name);
+        $("#Phone").val(obj.phone);
+        $("#Emp_Dept").val(obj.emp_Dept);
+        $("#Emp_Post").val(obj.emp_Post);
+        $("#Health").val(obj.health);
+    }
+
+    $("#reset").click(function () {
+        //返回上一页
+        location.href = "index";
+    });
+
+
+    //点击修改事件
+    $("#editeEmp").click(function () {
+        if ($("#editPhone").html() != "*") {
+            alert('手机号码有误，请重填');
+            return;
+        }
+        //属性赋值
+        var obj = {
+            "Phone": $("#Phone").val(),
+            "Emp_Dept": $("#Emp_Dept").val(),
+            "Emp_Post": $("#Emp_Post").val(),
+            "Emp_ID": $("#Emp_ID").val(),
+            "Health": $("#Health").val()
+        };
+        //判断是否已选择
+        if (obj.Emp_Post == -1) {
+            alert('请输入修改部门!');
+            return;
+        }
+        //判断是否已选择
+        if (obj.Emp_Post == -1) {
+            alert('请输入修改岗位!');
+            return;
+        }
+        //判断是否已选择
+        if (obj.Health == -1) {
+            alert('请输入健康状况!');
+            return;
+        }
+        
+        $.ajax({
+            url: "http://localhost:49233/api/Emp/UpdateEmp",
+            type: "post",
+            dataType: "text",
+            data: obj,
+            accepts: "application/x-www-form-urlencoded",
+            contentType: "application/x-www-form-urlencoded",
+            success: function (data) {
+                if (data == 0) {
+                    alert('修改失败');
+                    location.reload();
+                } else {
+                    alert('修改成功');
+                    location.href = "index";
+                }
+            }
+        });
+
+    });
+
+    //正则表达式判断手机验证
+    function Panduan() {
+        //正则判断手机
+        var phone = $("#Phone").val();
+        if (!(/^1[3456789]\d{9}$/.test(phone))) {
+            $("#editPhone").html("手机号码有误，请重填");
+            return false;
+        } else {
+            $("#editPhone").html("*");
+            return true;
+        }
+    }
+
+</script>
+
+
+

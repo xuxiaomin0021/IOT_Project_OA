@@ -15,6 +15,7 @@ using IOT_Project_OA.BLL.IBLL.AssetsIBLL;
 using IOT_Project_OA.BLL.BLL.AssetsBLL;
 using IOT_Project_OA.DAL.IDAL.AssetsIDAL;
 using IOT_Project_OA.DAL.DAL.AssetsDAL;
+using IOT_Project_OA.DAL.EmpDAL;
 
 namespace IOT_Project_OA.API
 {
@@ -49,6 +50,8 @@ namespace IOT_Project_OA.API
             services.AddSingleton<FilesIBLL, FilesBLL>();
             services.AddSingleton<FilesclassIDAL, FilesclassDAL>();
             services.AddSingleton<FilesIDAL, FilesDAL>();
+            services.AddSingleton<IEmpBLLInterface,EmpBLL>();
+            services.AddSingleton<IEmpDAL, EmpDAL>();
 
         }
 

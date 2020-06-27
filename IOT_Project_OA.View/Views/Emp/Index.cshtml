@@ -1,0 +1,218 @@
+﻿<!DOCTYPE html>
+<html>
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="~/layui-v2.5.6/layui/layui.js"></script>
+    <link href="~/layui-v2.5.6/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/alert_titleimg/js/ui.js"></script>
+    <link href="~/alert_titleimg/css/style.css" rel="stylesheet" />
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+    @*<blockquote class="layui-elem-quote layui-text">
+            尽管本示例中的原始数据：<a href="/test/table/demo3.json" target="_blank">/test/table/demo3.json</a>，并不符合 table 组件默认规定的数据格式，但从 layui 2.4.0 开始，新增的 parseData 回调可以将原始的任意格式的数据重新解析成 table 组件规定的数据格式。具体可以点击上方查看代码。
+        </blockquote>*@
+    <style>
+
+        .open {
+            background: #f88408;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="demoTable">
+        <input type="button" value="添加员工" class="layui-btn layui-btn-white" onclick="mizhu.open(1800, 600,'添加员工信息',  'http://localhost:49236/Emp/AddEmp');" style="width:80px">
+        员工姓名：
+        <div class="layui-inline">
+            <input type="text" id='emp_Name' name="emp_Name" lay-verify="required" placeholder="请输入查询员工姓名" autocomplete="true" class="layui-input">
+        </div>
+        <input type="button" value="🔍查询" class="layui-btn layui-btn-white " data-type="reload"><i class="layui-icon"></i>
+
+    </div>
+    
+    <script type="text/html" id="toolbarDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="getCheckData">批量删除</button>
+            <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+            <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+        </div>
+    </script>
+
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+
+
+    <table id="test" lay-filter="test"></table>
+
+    <div>
+        <img src="D:\实训\项目\Object\IOT_Project_OA.API\wwwroot\Files\c56fa63d-cfab-4688-ba6f-03665cc276d2.jpg" />
+    </div>
+</body>
+</html>
+
+
+<script>
+    layui.use('table', function () {
+        var table = layui.table;
+        //执行渲染
+        table.render({
+            elem: '#test' //指定原始表格元素选择器（推荐id选择器）
+            , height: 500 //容器高度
+            , toolbar: "#toolbarDemo"
+            , url: 'http://localhost:49233/api/Emp/order' //数据接口
+            , page: true
+            , cols: [[
+                
+                  { title: "多选", type: 'checkbox', fixed: 'left' }
+                , { field: 'Emp_Name', title: '姓名', width: 80, fixed: 'left', unresize: true, totalRowText: '合计行' }
+                , { field: 'Emp_Dept', title: '部门', width: 120, edit: 'text' }
+                , { field: 'Emp_Post', title: '岗位', width: 150, edit: 'text' }
+                , { field: 'Entry_Time', title: '入职时间', width: 100, totalRow: true }
+                , { field: 'Emp_Sex', title: '性别', width: 80, edit: 'text' }
+                , { field: 'Health', title: '健康状况', width: 80, edit: 'text' }
+                , { field: 'Emp_Picture', title: 'avatar', templet: '#img'},
+                , { field: 'Emp_Picture', title: '员工照片', templet: '<div><img src="{{ d.Emp_Picture }}" style="width:30px; height:30px;"></div>'}
+                , { fixed: 'right', title: '操作', toolbar: '#barDemo', width: 200 }
+            ]]
+            , parseData: function (res) { //res 即为原始返回的数据
+                console.log(res.data);
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": res.count, //解析数据长度
+                    "data": res.data //解析数据列表
+                };
+            },
+           page: {
+                limit: 10,//指定每页显示条数
+                limits: [2,5, 10, 15, 20, 25, 30, 35, 40, 45, 50],//每页条数的选择项
+            },
+            id: 'testReload'
+        });
+
+        //头工具栏事件
+        table.on('toolbar(test)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'getCheckData':
+                    var data = checkStatus.data;
+                    var ids = "";
+                    //alert(data[i].Emp_ID);
+                    if (confirm('确认要删除嘛？')) {
+                        $.each(data, function (i, t) {
+                            ids = ids + data[i].Emp_ID + "'" + "," + "'";
+                        });
+                        ids = ids.substring(0, ids.length - 3);
+                        if (ids == null || ids == undefined || ids == "") {
+                            alert("请选中要删除的数据!");
+                            return;
+                        }
+                        $.ajax({
+                            url: "http://localhost:49233/api/Emp/DeleteEmp",
+                            type: "post",
+                            dataType: "text",
+                            data: { deleteIds: ids },
+                            accepts: "application/x-www-form-urlencoded",
+                            contentType: "application/x-www-form-urlencoded",
+                            success: function (data) {
+                                if (data > 0) {
+                                    alert('删除成功!');
+                                    location.reload();
+                                } else {
+                                    alert('删除失败!');
+                                }
+                            }
+                        });
+
+                    } else {
+                        layer.alert('已为您取消本次不小心操作,下次注意!');
+                    }
+                    break;
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：' + data.length + ' 个');
+                    break;
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选' : '未全选');
+                    break;
+
+                //自定义头工具栏右侧图标 - 提示
+            };
+        });
+
+        //删除编辑
+        table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            layEvent = obj.event; //获得 lay-event 对应的值
+            //单删事件
+            if (layEvent === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    var id = data.Emp_ID;
+                    //向服务端发送删除指令
+                    $.ajax({
+                        url: "http://localhost:49233/api/Emp/DeleteEmp",
+                        type: "post",
+                        dataType: "text",
+                        data: { deleteIds: id },
+                        accepts: "application/x-www-form-urlencoded",
+                        contentType: "application/x-www-form-urlencoded",
+                        success: function (data) {
+                            if (data > 0) {
+                                alert('删除成功!');
+                                location.reload();
+                            } else {
+                                alert('删除失败!');
+                            }
+                        }
+                    })
+
+                })
+            } else if (layEvent == 'edit') {
+                var id = data.Emp_ID;
+                location.href = 'EditEmp?id=' + id;
+            }
+        });
+
+        var $ = layui.$, active = {
+            //查询
+            reload: function () {
+                var name = $('#emp_Name');//书籍名称 根据 id来取值
+                console.log(name.val());
+                // 执行重载
+                table.reload('testReload', {
+                    page: {
+                        curr: 1
+                        // 重新从第 1 页开始
+                    },
+                    where: {
+
+                        //key: 'emp_Name',
+                        emp_Name: name.val()
+                    }
+                });
+            }
+        }
+
+
+        $('.demoTable .layui-btn').on('click', function () {
+            //layer.alert(search);
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+
+    });
+
+
+
+    
+              
+
+</script>

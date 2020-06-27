@@ -7,6 +7,7 @@ using Dapper;
 using System.Data.SqlClient;
 using System.Data;
 using System.Reflection;
+using IOT_Project_OA.Model;
 
 namespace IOT_Project_OA.DAL
 {
@@ -48,7 +49,7 @@ namespace IOT_Project_OA.DAL
         }
 
         /// <summary>
-        /// 增删改 
+        /// 增删改 bu
         /// </summary>
         /// <param name="sql">sql语句</param>
         /// <returns></returns>
@@ -163,5 +164,57 @@ namespace IOT_Project_OA.DAL
                 return conn.Execute(sql);
             }
         }
+
+
+
+        /// <summary>
+        /// 全能表单删批删存储过程
+        /// </summary>
+        /// <param name="procName">存储过程名称</param>
+        /// <param name="tableName">表名</param>
+        /// <param name="idName">表名的主键ID名</param>
+        /// <param name="deleteIds">要删除的ID</param>
+        /// <returns></returns>
+        public int SingerAndBatchDeleteTable(string procName,string tableName,string idName,string deleteIds) 
+        {
+            int code = 0;
+            using (IDbConnection conn = new SqlConnection() { ConnectionString = connectionString })
+            {
+                deleteIds = "'" + deleteIds + "'";
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@tableName", tableName);
+                parameters.Add("@tableID", idName);
+                parameters.Add("@DeleID",deleteIds);
+                code = conn.Execute(procName,parameters,commandType:CommandType.StoredProcedure);
+            }
+           return code;
+        } 
+
+
+        public int UpdateEmp(string procName,Base_Emp_Information model)
+        {
+            string qian ="'";
+            string hou = "'";
+            model.Emp_Dept = qian + model.Emp_Dept + hou;
+            model.Emp_Post = qian + model.Emp_Post + hou;
+            model.Health = qian + model.Health + hou;
+            model.Phone = qian + model.Phone + hou;
+            string id = qian + model.Emp_ID + hou;
+            int code = 0;
+            using (IDbConnection conn = new SqlConnection() { ConnectionString = connectionString })
+            {
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@updateFile1", model.Emp_Dept);
+                parameters.Add("@updateFile2", model.Emp_Post);
+                parameters.Add("@updateFile3", model.Phone);
+                parameters.Add("@updateFile4", model.Health);
+                parameters.Add("@id", id);
+                code = conn.Execute(procName, parameters, commandType: CommandType.StoredProcedure);
+            }
+            return code;
+
+        }
+
+
     }
 }

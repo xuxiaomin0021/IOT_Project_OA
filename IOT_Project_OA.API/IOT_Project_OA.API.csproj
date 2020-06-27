@@ -11,8 +11,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\IOT_Project_OA.BLL\IOT_Project_OA.BLL.csproj" />
+    <ProjectReference Include="..\IOT_Project_OA.Common\IOT_Project_OA.Common.csproj" />
     <ProjectReference Include="..\IOT_Project_OA.DAL\IOT_Project_OA.DAL.csproj" />
     <ProjectReference Include="..\IOT_Project_OA.Model\IOT_Project_OA.Model.csproj" />
+    <ProjectReference Include="..\IOT_Project_OA.View\IOT_Project_OA.View.csproj" />
   </ItemGroup>
 
 

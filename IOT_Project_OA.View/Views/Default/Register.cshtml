@@ -1,0 +1,161 @@
+﻿
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+    <link href="~/layuiadmin/style/admin.css" rel="stylesheet" />
+    <style>
+
+        .title {
+            text-align: center;
+            font-size: 50px;
+            color: crimson;
+        }
+
+        .input {
+            width: 150px;
+            height: 35px;
+        }
+
+        .font {
+            color: red;
+        }
+
+        .class-div {
+            margin-top: 500px;
+            position: absolute;
+            width: 500px;
+            height: 500px;
+        }
+    </style>
+</head>
+<body>
+    <div id="class-div">
+        <h1 class="title"> 欢迎使用OA办公系统</h1>
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-block">
+                <input type="text" id="username" lay-verify="title" autocomplete="off" placeholder="请输入用户名" class="input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-block">
+                <input type="password" id="password" placeholder="请输入密码" autocomplete="off" class="input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">确认密码</label>
+            <div class="layui-input-block">
+                <input type="password" id="Againpassword" placeholder="请再次输入密码" autocomplete="off" class="input">
+            </div>
+        </div>
+        @*<div class="layui-form-item">
+                <label class="layui-form-label">角色选择</label>
+                <div class="layui-input-block" id="role"></div>
+            </div>*@
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" id="btn_Register" class="layui-btn" lay-submit="" lay-filter="demo1">注册</button>
+                <button type="button" id="btn_Login" class="layui-btn layui-btn-primary">登录</button>
+            </div>
+        </div>
+    </div>
+    @*<img src="~/Images/Register.png" style=" width: 100%;
+        height: 100%;" />*@
+</body>
+</html>
+<script>
+    //div整体页面盒子居中
+    $(document).ready(function () {
+        var iWidth = 500; //弹出窗口的宽度;
+        var iHeight = 400; //弹出窗口的高度;
+        var iTop = (document.documentElement.clientHeight - iHeight) / 2; //获得窗口的垂直位置;
+        var iLeft = (document.documentElement.clientWidth - iWidth) / 2; //获得窗口的水平位置;
+        $("#class-div").height(iHeight)
+            .width(iWidth)
+            .css('position', 'absolute')
+            .css("top", iTop)
+            .css("left", iLeft)
+    });
+    //初始化加载所有角色信息
+    //$(function () {
+    //    $.ajax({
+    //        url: 'http://localhost:49233/api/UserLogin/RoleList',
+    //        type: 'get',
+    //        dataType: 'text',
+    //        contentType: 'application/x-www-form-urlencoded',
+    //        accepts: 'application/x-www-form-urlencoded',
+    //        success: function (data) {
+    //            var tr = '';
+    //            $.each($.parseJSON(data), function (i, t) {
+    //                tr += '<input type="checkbox" id="checkboxwa" value="' + t.role_ID + '">' + t.role_Name + '';
+    //            })
+    //            $('#role').append(tr);
+    //        }
+    //    })
+    //})
+    //跳转到登录页面
+    $('#btn_Login').click(function () {
+        window.location.href = "/Default/Login";
+    })
+    //开始注册
+    $('#btn_Register').click(function () {
+        //var id_array = new Array();
+        //$('input[id="checkboxwa"]:checked').each(function () {
+        //    id_array.push($(this).val());//向数组中添加元素
+        //});
+        //var roles = id_array.join(',');//将数组元素连接起来以构建一个字符串
+        var obj = {
+            "User_Name": $('#username').val(),
+            "User_Pwd": $('#password').val(),
+            // "roles": roles
+        };
+
+        if (obj.User_Name == null || obj.User_Name == "" || obj.User_Name == undefined) {
+            alert("用户名不能为空");
+            return;
+        }
+
+        var p = new RegExp(/(?!^bai\d+$)(?!^[a-zA-Z]+$)[0-9a-zA-Z]{4,23}(?!^\d + $)/);
+        if (!p.test(obj.User_Pwd)) {
+            alert("密码必须是数字和字母组合");
+            return;
+        }
+        var Againpassword = $('#Againpassword').val();
+        if (Againpassword != obj.User_Pwd) {
+            alert("两次输入的密码不一致");
+        }
+        $.ajax({
+            url: 'http://localhost:49233/api/UserLogin/Register',
+            type: 'post',
+            dataType: 'text',
+            contentType: 'application/x-www-form-urlencoded',
+            accepts: 'application/x-www-form-urlencoded',
+            data: obj,
+            success: function (data) {
+                if (data > 0) {
+                    alert("注册成功!");
+                    window.location.href = "/Default/Login";
+                } else {
+                    alert("注册失败!");
+                    return;
+                }
+            }
+
+        })
+    })
+
+</script>
+
+
+
+
+
+
+
+
+
+

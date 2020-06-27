@@ -7,13 +7,16 @@ using Dapper;
 using System.Data.SqlClient;
 using System.Data;
 using System.Reflection;
+using WebApplication72.Models;
 using IOT_Project_OA.Model;
+using Newtonsoft.Json;
 
 namespace IOT_Project_OA.DAL
 {
 
     public class DapperHelper
     {
+
         private const string connectionString = "Data Source=192.168.0.111;Initial Catalog=OA_Object;User ID=sa;PassWord=1234";
 
         /// <summary>
@@ -30,8 +33,7 @@ namespace IOT_Project_OA.DAL
                 string sql = $"select * from {t.Name}";
                 return conn.Query<T>(sql).ToList();
             }
-        }
-
+        } 
         /// <summary>
         /// 获取单条信息
         /// </summary>
@@ -72,21 +74,21 @@ namespace IOT_Project_OA.DAL
         /// <param name="orderField">根据id字段进行排序</param>
         /// <param name="PageIndex">页码</param>
         /// <returns></returns>
-        public ProcDataAndTotal<T> GetProcData<T>(string tableName,string whereStr,string orderField,int PageIndex) where T:class,new()
+        public ProcDataAndTotal<T> GetProcData<T>(string tableName, string whereStr, string orderField, int PageIndex) where T : class, new()
         {
             using (IDbConnection conn = new SqlConnection() { ConnectionString = connectionString })
             {
                 var param = new DynamicParameters();
-                param.Add("@table",tableName);
-                param.Add("@field","*");
-                param.Add("@where",whereStr);
-                param.Add("@order",orderField);
-                param.Add("@pageSize",5);
-                param.Add("@pageNumber",PageIndex);
-                param.Add("@Total",0,DbType.Int32,ParameterDirection.Output);
+                param.Add("@table", tableName);
+                param.Add("@field", "*");
+                param.Add("@where", whereStr);
+                param.Add("@order", orderField);
+                param.Add("@pageSize", 5);
+                param.Add("@pageNumber", PageIndex);
+                param.Add("@Total", 0, DbType.Int32, ParameterDirection.Output);
 
                 //返回的类
-                ProcDataAndTotal<T> dataAndTotal = new ProcDataAndTotal<T>()
+                 ProcDataAndTotal<T> dataAndTotal = new ProcDataAndTotal<T>()
                 {
                     ProcData = conn.Query<T>("SP_Paging1", param, commandType: CommandType.StoredProcedure).ToList(),
                     Total = param.Get<int>("@Total"),
@@ -94,8 +96,26 @@ namespace IOT_Project_OA.DAL
                 return dataAndTotal;
             }
         }
-
-
+        /// <summary>
+        /// 反射实现用户登录
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="User_Name"></param>
+        /// <param name="User_Pwd"></param>
+        /// <returns></returns>
+        public List<T> GetLoginData<T>(string User_Name, string User_Pwd) where T : class, new()
+        {
+            using (IDbConnection conn = new SqlConnection() { ConnectionString = connectionString })
+            {
+                //拼接规则
+                //select * from tableName where User_Name ={ } && User_Pwd ={ };
+                Type t = typeof(T);
+                StringBuilder builder = new StringBuilder();
+                builder.Append($"select * from {t.Name} where User_Name='{User_Name}' and User_Pwd='{User_Pwd}'");
+                string sql = builder.ToString();
+                return conn.Query<T>(sql).ToList();
+            }
+        }
         /// <summary>
         /// 多表联查的存储过程
         /// </summary>
@@ -117,7 +137,7 @@ namespace IOT_Project_OA.DAL
             }
         }
 
-        
+
         /// <summary>
         /// 泛型反射添加
         /// </summary>
@@ -136,18 +156,47 @@ namespace IOT_Project_OA.DAL
                 {
                     stringBuilder.Append($"'{item.GetValue(model)}',");
                 }
-                string sql = stringBuilder.ToString().Substring(0,stringBuilder.Length-1)+")";
+                string sql = stringBuilder.ToString().Substring(0, stringBuilder.Length - 1) + ")";
                 return conn.Execute(sql);
             }
         }
-
+        /// <summary>
+        /// 泛型反射添加带标识列可空添加
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public int InsertData<T>(T model) where T : class, new()
+        {
+            using (IDbConnection conn = new SqlConnection() { ConnectionString = connectionString })
+            {
+                //拼接规则
+                //insert into tableName (Id,name,Pwd) values('');
+                Type t = model.GetType();
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.Append($"insert into {t.Name} (");
+                StringBuilder Builder = new StringBuilder();
+                Builder.Append($" values(");
+                PropertyInfo[] property = t.GetProperties();
+                foreach (var item in property)
+                {
+                    if (!item.Name.Equals("User_ID"))
+                    {
+                        stringBuilder.Append($"{item.Name},");
+                        Builder.Append($"'{item.GetValue(model)}',");
+                    } 
+                }
+                string sql = stringBuilder.ToString().TrimEnd(',') + ")" + Builder.ToString().TrimEnd(',') + ")"; 
+                return conn.Execute(sql);
+            }
+        }
         /// <summary>
         /// 反射删除
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="model">将要删除的记录的ID存在model中</param>
         /// <returns></returns>
-        public int DeleteData<T>(T model) where T:class,new()
+        public int DeleteData<T>(T model) where T : class, new()
         {
             using (IDbConnection conn = new SqlConnection() { ConnectionString = connectionString })
             {
@@ -156,7 +205,7 @@ namespace IOT_Project_OA.DAL
                 string sql = $"delete from {t.Name} ";
                 foreach (var item in property)
                 {
-                    if(!string.IsNullOrEmpty(item.GetValue(model).ToString()))
+                    if (!string.IsNullOrEmpty(item.GetValue(model).ToString()))
                     {
                         sql += $" where {item.Name} = '{item.GetValue(model)}'";
                     }

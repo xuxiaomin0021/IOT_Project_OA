@@ -6,10 +6,12 @@
 
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.35" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\IOT_Project_OA.Common\IOT_Project_OA.Common.csproj" />
     <ProjectReference Include="..\IOT_Project_OA.Model\IOT_Project_OA.Model.csproj" />
   </ItemGroup>
 

@@ -27,9 +27,9 @@ namespace IOT_Project_OA.API.Controllers.Assets
         //显示所有数据存储过程分页
         [Route("ProcGetFilesdata")]
         [HttpGet]
-        public ProcDataAndTotal<Base_Assete_Files> ProcGetFilesdata(int pageIndex)
+        public ProcDataAndTotal<Base_Assete_Files> ProcGetFilesdata(int pageIndex,int pageSize)
         {
-            ProcDataAndTotal<Base_Assete_Files> proc = _filesbll.ProcPageData("", pageIndex);
+            ProcDataAndTotal<Base_Assete_Files> proc = _filesbll.ProcPageData("", pageIndex,pageSize);
             return proc;
         }
 
@@ -56,7 +56,7 @@ namespace IOT_Project_OA.API.Controllers.Assets
                     wheresql += $" and {item.Name} = '{item.GetValue(selectmodel)}'";
                 }
             }
-            ProcDataAndTotal<Base_Assete_Files> proc = _filesbll.ProcPageData(wheresql, pageIndex);
+            ProcDataAndTotal<Base_Assete_Files> proc = _filesbll.ProcPageData(wheresql, pageIndex,5);
             return proc;
         }
 

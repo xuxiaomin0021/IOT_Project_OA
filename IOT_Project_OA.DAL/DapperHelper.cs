@@ -74,7 +74,7 @@ namespace IOT_Project_OA.DAL
         /// <param name="orderField">根据id字段进行排序</param>
         /// <param name="PageIndex">页码</param>
         /// <returns></returns>
-        public ProcDataAndTotal<T> GetProcData<T>(string tableName, string whereStr, string orderField, int PageIndex) where T : class, new()
+        public ProcDataAndTotal<T> GetProcData<T>(string tableName, string whereStr, string orderField, int PageIndex,int pageSize) where T : class, new()
         {
             using (IDbConnection conn = new SqlConnection() { ConnectionString = connectionString })
             {
@@ -83,7 +83,7 @@ namespace IOT_Project_OA.DAL
                 param.Add("@field", "*");
                 param.Add("@where", whereStr);
                 param.Add("@order", orderField);
-                param.Add("@pageSize", 5);
+                param.Add("@pageSize", pageSize);
                 param.Add("@pageNumber", PageIndex);
                 param.Add("@Total", 0, DbType.Int32, ParameterDirection.Output);
 

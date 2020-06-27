@@ -36,7 +36,7 @@ namespace IOT_Project_OA.API.Controllers.Emp
         [HttpGet]
         public string order(int page,int limit, string emp_Name)
         {
-            ProcDataAndTotal<Base_Emp_Information> proc = bll.ProcPageData(emp_Name, page);
+            ProcDataAndTotal<Base_Emp_Information> proc = bll.ProcPageData(emp_Name, page,limit);
             //string order = "Emp_ID,Entry_Time,Emp_Dept,Emp_Post,Emp_Sex,Nominal_Family,Emp_Code,Native_Place,Registered_Residence,[Political _Outlook],Born_Time,Family_Telephone,Specialty,Remarks,Now_Address,Phone,Health,Hobby,Emp_Picture,Emp_Name";
             string sJson = "{\"code\": " + 0 + ",\"msg\": \"\",\"count\":" + proc.Total + ",\"data\":" + JsonConvert.SerializeObject(proc.ProcData) + "}";
 
@@ -78,9 +78,6 @@ namespace IOT_Project_OA.API.Controllers.Emp
             return bll.Upemp(model);
         }
 
-
-       
-        
 
         [HttpPost]
         public int AddEmp(string obj)

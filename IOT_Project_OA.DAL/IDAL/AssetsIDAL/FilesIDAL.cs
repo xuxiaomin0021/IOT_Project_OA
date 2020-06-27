@@ -16,7 +16,7 @@ namespace IOT_Project_OA.DAL.IDAL.AssetsIDAL
         /// <param name="whereStr">查询条件</param>
         /// <param name="pageIndex">页码</param>
         /// <returns></returns>
-        public ProcDataAndTotal<Base_Assete_Files> ProcPageData(string whereStr,int pageIndex);
+        public ProcDataAndTotal<Base_Assete_Files> ProcPageData(string whereStr,int pageIndex,int pageSize);
 
 
         /// <summary>

@@ -13,7 +13,7 @@ namespace IOT_Project_OA.DAL
         /// <param name="whereStr">查询条件</param>
         /// <param name="pageIndex">页码</param>
         /// <returns></returns>
-        public ProcDataAndTotal<Base_Emp_Information> ProcPageData(string whereStr, int pageIndex);
+        public ProcDataAndTotal<Base_Emp_Information> ProcPageData(string whereStr, int pageIndex, int pageSize);
 
 
         public int DeleteEmpTable(string deleteIds);

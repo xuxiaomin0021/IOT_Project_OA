@@ -30,9 +30,9 @@ namespace IOT_Project_OA.BLL
             return dal.GetFirstData(Id);
         }
 
-        public ProcDataAndTotal<Base_Emp_Information> ProcPageData(string whereStr, int pageIndex)
+        public ProcDataAndTotal<Base_Emp_Information> ProcPageData(string whereStr, int pageIndex,int pageSize)
         {
-            return dal.ProcPageData(whereStr, pageIndex);
+            return dal.ProcPageData(whereStr, pageIndex,pageSize);
         }
 
         public int Upemp(Base_Emp_Information model)

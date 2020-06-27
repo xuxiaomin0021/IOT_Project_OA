@@ -57,9 +57,9 @@ namespace IOT_Project_OA.BLL.BLL.AssetsBLL
         /// <param name="whereStr"></param>
         /// <param name="pageIndex"></param>
         /// <returns></returns>
-        public ProcDataAndTotal<Base_Assete_Files> ProcPageData(string whereStr, int pageIndex)
+        public ProcDataAndTotal<Base_Assete_Files> ProcPageData(string whereStr, int pageIndex,int pageSize)
         {
-            return _filesDal.ProcPageData(whereStr,pageIndex);
+            return _filesDal.ProcPageData(whereStr,pageIndex,pageSize);
         }
     }
 }

@@ -49,13 +49,13 @@ namespace IOT_Project_OA.DAL.EmpDAL
         /// <param name="whereStr"></param>
         /// <param name="pageIndex"></param>
         /// <returns></returns>
-        public ProcDataAndTotal<Base_Emp_Information> ProcPageData(string whereStr, int pageIndex)
+        public ProcDataAndTotal<Base_Emp_Information> ProcPageData(string whereStr, int pageIndex, int pageSize)
         {
             if(whereStr != null)
             {
                 whereStr = $" and Emp_Name like '%{whereStr}%'";
             }
-            ProcDataAndTotal<Base_Emp_Information> list = dapper.GetProcData<Base_Emp_Information>("Base_Emp_Information", whereStr,"Entry_Time", pageIndex);
+            ProcDataAndTotal<Base_Emp_Information> list = dapper.GetProcData<Base_Emp_Information>("Base_Emp_Information", whereStr,"Entry_Time", pageIndex,pageSize);
             return list;
         }
 

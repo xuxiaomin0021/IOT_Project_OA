@@ -39,7 +39,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">用户名称</label>
             <div class="layui-input-block">
-                <input type="text" id="user_Name" lay-verify="title" autocomplete="off" class="input">
+                <input type="text" id="user_Name" value="@ViewBag.user_Name" disabled="disabled" lay-verify="title" autocomplete="off" class="input">
             </div>
         </div>
         <div class="layui-form-item">
@@ -69,22 +69,31 @@
             .css("left", iLeft)
     });
     //初始化加载所有角色信息
-    //$(function () {
-    //    $.ajax({
-    //        url: 'http://localhost:49233/api/UserLogin/RoleList',
-    //        type: 'get',
-    //        dataType: 'text',
-    //        contentType: 'application/x-www-form-urlencoded',
-    //        accepts: 'application/x-www-form-urlencoded',
-    //        success: function (data) {
-    //            var tr = '';
-    //            $.each($.parseJSON(data), function (i, t) {
-    //                tr += '<input type="checkbox" id="checkboxwa" value="' + t.role_ID + '">' + t.role_Name + '';
-    //            })
-    //            $('#role').append(tr);
-    //        }
-    //    })
-    //})
+    $(function () {
+        //判断是否非法跳转
+        if ($("#user_Name").val() == "" || $("#user_Name").val() == null || $("#user_Name").val() == undefined) {
+            alert('非法登陆,请您注册用户在进行分配角色!');
+            location.href = "Register";
+        }
+        //AJAX去遍历循环添加角色
+        $.ajax({
+            url: 'http://localhost:49233/api/ToAllocate/GetRoleList',
+            type: 'get',
+            dataType: 'json',
+            contentType: 'application/x-www-form-urlencoded',
+            accepts: 'application/x-www-form-urlencoded',
+            success: function (data) {
+                var tr = '';
+                $.each(data, function (i, t) {
+                    tr = '<input type="checkbox" class="checkboxwa" value="' + t.id + '">' + t.role_Name + '';
+                    $('#role').append(tr);
+                })
+               
+            }
+        })
+    })
+
+
     //跳转到登录页面
     $('#btn_Login').click(function () {
         window.location.href = "/Default/Login";
@@ -92,7 +101,45 @@
 
     //开始注册
     $('#btn_Register').click(function () {
+        //定义变量存储角色ID
+        var ids = "";
        
+        //遍历给ids赋值
+        $.each($(".checkboxwa:checked"), function (index, item) {
+            ids += $(item).val() + ",";
+        });
+        //去掉最后一个,号
+        ids = ids.substring(0, ids.length - 1);
+        //判断当选择多个角色或者没选择角色给出提示
+        if (ids == "" || ids.search(",") != -1) {
+            alert('角色分配不能超过一个或未选则角色!');
+            return;
+        }
+        //定义对象存储属性
+        var obj = {
+            "User_Name": $("#user_Name").val(),
+            "Role_ID": ids
+        };
+
+        $.ajax({
+            url: 'http://localhost:49233/api/ToAllocate/AddUserAndRole',
+            type: 'post',
+            dataType: 'text',
+            contentType: 'application/x-www-form-urlencoded',
+            accepts: 'application/x-www-form-urlencoded',
+            data: obj,
+            success: function (data) {
+                if (data > 0) {
+                    alert("注册成功!");
+                    location.href = "Login";
+                } else {
+                    alert("注册失败!");
+                    return;
+                }
+            }
+        });
+
+
     })
 
 </script>

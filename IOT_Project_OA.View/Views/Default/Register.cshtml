@@ -137,8 +137,9 @@
             data: obj,
             success: function (data) {
                 if (data > 0) {
-                    alert("注册成功!");
-                    window.location.href = "/Default/Login";
+                    alert("注册用户成功,请进行角色授权");
+                    var user_Name = $('#username').val();
+                    window.location.href = "/Default/RegisterUserAndRole?user_Name=" + user_Name;
                 } else {
                     alert("注册失败!");
                     return;

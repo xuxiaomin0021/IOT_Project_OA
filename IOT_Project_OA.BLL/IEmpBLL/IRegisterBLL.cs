@@ -16,5 +16,10 @@ namespace IOT_Project_OA.BLL
 
         List<Base_Role> GetRoleList();
 
+        List<Base_User> GetUserList();
+
+
+        int AddUserAndRole(Base_RoleAndUser model);
+
     }
 }

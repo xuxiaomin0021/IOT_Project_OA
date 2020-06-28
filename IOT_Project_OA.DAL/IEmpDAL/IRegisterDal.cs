@@ -17,5 +17,9 @@ namespace IOT_Project_OA.DAL
 
         List<Base_Role> GetRoleList();
 
+        List<Base_User> GetUserList();
+
+        int AddUserAndRole(Base_RoleAndUser model);
+
     }
 }

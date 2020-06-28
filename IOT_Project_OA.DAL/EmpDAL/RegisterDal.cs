@@ -22,9 +22,19 @@ namespace IOT_Project_OA.DAL
             return helper.AddData(model);
         }
 
+        public int AddUserAndRole(Base_RoleAndUser model)
+        {
+            return helper.AddData<Base_RoleAndUser>(model);
+        }
+
         public List<Base_Role> GetRoleList()
         {
             return helper.GetToList<Base_Role>();
+        }
+
+        public List<Base_User> GetUserList()
+        {
+            return helper.GetToList<Base_User>();
         }
 
         public List<Base_Quan> Select()

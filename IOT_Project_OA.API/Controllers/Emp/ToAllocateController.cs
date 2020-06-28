@@ -24,6 +24,7 @@ namespace IOT_Project_OA.API.Controllers.Emp
             bll = _bll;
         }
 
+
         /// <summary>
         /// 角色表添加,角色权限表添加 同时添加
         /// </summary>
@@ -68,6 +69,29 @@ namespace IOT_Project_OA.API.Controllers.Emp
         public List<Base_Quan> ShowQuan()
         {
             return bll.Select(); 
+        }
+
+
+        [HttpGet]
+        public List<Base_Role> GetRoleList()
+        {
+            List<Base_Role> list = bll.GetRoleList();
+            return list;
+        }
+
+        [HttpPost]
+        public int AddUserAndRole([FromForm]AddUserAndRole model)
+        {
+            Base_User user =  bll.GetUserList().Where(s=>s.User_Name.Equals(model.User_Name)).FirstOrDefault();
+            if(user == null)
+            {
+                return 0;
+            }
+            Base_RoleAndUser m = new Base_RoleAndUser() {
+                Role_ID = model.Role_ID,
+                User_ID = user.User_ID
+            };
+            return bll.AddUserAndRole(m);
         }
 
 

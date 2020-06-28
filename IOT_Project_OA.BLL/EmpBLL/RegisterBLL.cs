@@ -29,9 +29,24 @@ namespace IOT_Project_OA.BLL
             return dal.AddUserAndRole(model);
         }
 
+        public List<Base_QuanAndRole> GetQandRList()
+        {
+            return dal.GetQandRList();
+        }
+
+        public List<Base_Quan> GetQuanList()
+        {
+            return dal.GetQuanList();
+        }
+
         public List<Base_Role> GetRoleList()
         {
             return dal.GetRoleList();
+        }
+
+        public List<Base_RoleAndUser> GetUandRList()
+        {
+            return dal.GetUandRList();
         }
 
         public List<Base_User> GetUserList()
@@ -43,5 +58,7 @@ namespace IOT_Project_OA.BLL
         {
             return dal.Select();
         }
+
+        
     }
 }

@@ -30,7 +30,18 @@ namespace IOT_Project_OA.View.Controllers.Emp_Test
         {
             return View();
         }
-        
+
+
+        /// <summary>
+        /// 显示角色权限关联信息
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult ShowRandQ()
+        {
+            return View();
+        }
+
+
 
     }
 }

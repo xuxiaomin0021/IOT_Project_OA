@@ -21,5 +21,11 @@ namespace IOT_Project_OA.BLL
 
         int AddUserAndRole(Base_RoleAndUser model);
 
+        List<Base_RoleAndUser> GetUandRList();
+
+        List<Base_Quan> GetQuanList();
+
+        List<Base_QuanAndRole> GetQandRList();
+
     }
 }

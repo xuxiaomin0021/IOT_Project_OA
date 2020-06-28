@@ -7,6 +7,7 @@ using IOT_Project_OA.Model;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace IOT_Project_OA.API.Controllers.Emp
 {
@@ -92,6 +93,36 @@ namespace IOT_Project_OA.API.Controllers.Emp
                 User_ID = user.User_ID
             };
             return bll.AddUserAndRole(m);
+        }
+
+        /// <summary>
+        /// 获取数据库中角色和权限的四个属性
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<List<ShowRoleAndQuan>> GetShowList(string role_Name = "")
+        {
+            List<Base_Role> rList = await Task.Run(() => { return bll.GetRoleList(); });
+            List<Base_Quan> qList = await Task.Run(() => { return bll.GetQuanList(); });
+            List<Base_QuanAndRole> qrList = await Task.Run(() => { return bll.GetQandRList(); });
+            
+            List<ShowRoleAndQuan> list = new List<ShowRoleAndQuan>();
+            list = (from r in rList
+                   join qr in qrList on r.ID equals qr.Role_ID
+                   join q in qList on qr.Quan_ID equals q.ID
+                   select new ShowRoleAndQuan
+                    {
+                        CreateDate = r.CreateDate,
+                        Role_Desc = r.Role_Desc,
+                        Role_Name = r.Role_Name,
+                        Menu_Name =q.Menu_Name
+                   }).ToList();
+            if (!string.IsNullOrEmpty(role_Name))
+            {
+                list = list.Where(s => s.Role_Name.Equals(role_Name)).ToList();
+            }
+
+            return list;
         }
 
 

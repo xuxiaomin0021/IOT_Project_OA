@@ -166,10 +166,16 @@ namespace IOT_Project_OA.DAL
                 PropertyInfo[] property = t.GetProperties();
                 foreach (var item in property)
                 {
-                    if (item.Name.Equals("ID") || item.Name.Equals("User_ID"))
+                    if (t.Name.Equals("Base_RoleAndUser") && item.Name.Equals("User_ID"))
+                    {
+                        stringBuilder.Append($"'{item.GetValue(model)}',");
+                        continue;
+                    }
+                    else if (item.Name.Equals("ID") || item.Name.Equals("User_ID"))
                     {
                         continue;
                     }
+                    
                     stringBuilder.Append($"'{item.GetValue(model)}',");
                     //stringBuilder.Append($"'{item.GetValue(model)}',");
                 }
@@ -281,6 +287,8 @@ namespace IOT_Project_OA.DAL
 
         }
 
+
+        
 
     }
 }

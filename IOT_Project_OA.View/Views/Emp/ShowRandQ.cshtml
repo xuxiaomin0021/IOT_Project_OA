@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewData["Title"] = "ShowRandQ";
+}
+
+<link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+<script src="~/layuiadmin/layui/layui.js"></script>
+
+
+
+<div class="layui-inline">
+    <input type="text" id='role_Name' name="role_Name" lay-verify="required" placeholder="请输入具体角色名称" autocomplete="true" class="layui-input">
+</div>
+<input type="button" value="🔍查询" id="search" class="layui-btn layui-btn-white " data-type="reload"><i class="layui-icon"></i>
+ <input button type="button" id="addRole" class="layui-btn layui-btn-normal" value="添加角色">
+<table class="layui-table">
+    <thead>
+        <tr>
+            <td>角色名称</td>
+            <td>创建时间</td>
+            <td>描述</td>
+            <td>菜单名称</td>
+        </tr>
+    </thead>
+
+    <tbody id="body"></tbody>
+</table>
+
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+
+    $(function () {
+        GetList();
+
+    });
+
+
+    $("#search").click(function () {
+        GetList();
+    });
+
+    $("#addRole").click(function () {
+        location.href = "CreateRole";
+    });
+
+    function GetList() {
+        var role_Name = $("#role_Name").val();
+        $.ajax({
+            url: "http://localhost:49233/api/ToAllocate/GetShowList",
+            type: "get",
+            datatype: "json",
+            data: { role_Name: role_Name },
+            success: function (data) {
+                $("#body").empty();
+                if (data == null) {
+                    alert('没用可显示数据!');
+                    return;
+                } else {
+                    $.each(data, function (index, item) {
+                        var tr = '<tr><td>' + item.role_Name + '</td><td>' + item.createDate + '</td><td>' + item.role_Desc + '</td><td>' + item.menu_Name + '</td></tr>';
+                        $("#body").append(tr);
+                    });
+                }
+            }
+        });
+
+    }
+
+</script>
+
+

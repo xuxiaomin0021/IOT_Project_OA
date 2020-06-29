@@ -11,7 +11,7 @@
         .div1 {
             width: 170px;
             height: 75px;
-            background-color: aqua;
+            /*// background-color: aqua;*/
             float: left;
             margin-left: 63px;
             margin-top: 40px;
@@ -212,11 +212,28 @@
     <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
     <script>
-        var username = localStorage["User_Name"];
-        //<% String username = request.getSession().getAttribute("username").toString();%>
-        //    您好，<%=username %>
-        //var token = localStorage["User_Name"];
-        //var userName = $('#laName').html(token);
+
+        //页面刚加载的时候，开始判断，如果有用户名，就显示在页面上，如果没有用户名的话，就显示登录名称
+        $(function () {
+            var storage = window.localStorage["User_Name"];
+            var data =
+            {
+                uname: "User_Name"
+            }
+            if (data == 0) {
+                $("#laName").show("未登录");
+                $("#uname").html('');
+            } else {
+                var t = JSON.stringify(data);
+                storage.setItem("data", t);
+                var json = storage.setItem("data");
+                var jsonObj = JSON.parse(json);
+                alert(jsonObj);
+                $("#laName").hide();
+                $("#uname").html(jsonObj);
+
+            }
+        })
     </script>
 </head>
 <body onload="load_data()">
@@ -224,7 +241,7 @@
     <div class="AllDiv">
         <div class="div2">
             <div class="div1">
-                <a href="/Login/Login">
+                <a href="/Default/Login">
                     欢迎<label id="laName"><span id="uname"></span></label>云办公OA
                 </a>
             </div>
@@ -285,7 +302,7 @@
                                     <div class="box_5">
                                         <img class="img3" src="~/Images/2.png" />
                                         <br />
-                                        <label style="float:left;font-size:16px;">拜访客户</label>
+                                        <label style="float:left;font-size:16px;" href="/SaleAdmin/SaleAdd">拜访客户</label>
                                     </div>
                                     <div class="box_6">
                                         <span class="number">66</span>
@@ -344,12 +361,12 @@
                             </div>
                         </div>
                     </div>
-
-
                     <br />
                     <br>
                 </div>
-                <div class="layui-tab-item">内容2</div>
+                <div class="layui-tab-item">
+                    <table class="layui-hide" id="demo" lay-filter="test"></table>
+                </div>
 
             </div>
 
@@ -361,6 +378,7 @@
     <script src="~/layuiadmin/layui/layui.js"></script>
     <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
     <script>
+
         layui.use('element', function () {
             var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
             //监听导航点击
@@ -445,18 +463,56 @@
             refreshDate();
         }
 
-        function load_data() {
-            //页面刚加载的时候，开始判断，如果有用户名，就显示在页面上，如果没有用户名的话，就显示登录名称
+        layui.use(['laypage', 'layer', 'table', 'element'], function () {
 
-            var theme = localStorage.getItem("User_Name");
-            if (theme == null || theme == "") {
-                $("#laName").show("未登录");
-                $("#uname").html('');
-            } else {
-                $("#laName").hide();
-                $("#uname").html(theme);
-            }
-        }
+            var laypage = layui.laypage //分页
+                , layer = layui.layer //弹层
+                , table = layui.table //表格
+                , element = layui.element //元素操作
+
+            //监听Tab切换
+            element.on('tab(demo)', function (data) {
+                layer.tips('切换了 ' + data.index + ':' + this.innerHTML, this, {
+                    tips: 1
+                });
+            });
+
+            //执行一个 table 实例
+            table.render({
+                elem: '#demo'
+                , height: 420
+                , width: 1900
+                , url: 'http://localhost:49233/Api/Emp/order' //数据接口
+                , title: '员工档案'
+                , page: true //开启分页
+                , toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+                , totalRow: true //开启合计行
+                , cols: [[ //表头
+                    { type: 'checkbox', fixed: 'left' }
+                    , { field: 'Emp_Name', title: '员工姓名', width: 80 }
+                    , { field: 'Born_Time', title: '出生日期', width: 200 }
+                    , { field: 'Emp_Sex', title: '性别', width: 90, sort: true, totalRow: true }
+                    , { field: 'Phone', title: '手机号码', width: 80, sort: true }
+                    , { field: 'Emp_Dept', title: '部门', width: 80, sort: true, totalRow: true }
+                    , { field: 'Emp_Post', title: '岗位', width: 150 }
+                    , { field: 'Native_Place', title: '籍贯', width: 200 }
+                    , { field: 'Entry_Time', title: '入职时间', width: 135, sort: true, totalRow: true }
+                    , { fixed: 'right', width: 165, align: 'center', toolbar: '#barDemo' }
+                ]]
+            });
+            //分页
+            laypage.render({
+                elem: 'Emp_ID' //分页容器的id
+                , count: 100 //总页数
+                , skin: '#1E9FFF' //自定义选中色值
+                //,skip: true //开启跳页
+                , jump: function (obj, first) {
+                    if (!first) {
+                        layer.msg('第' + obj.curr + '页', { offset: 'b' });
+                    }
+                }
+            });
+        })
     </script>
 </body>
 </html>

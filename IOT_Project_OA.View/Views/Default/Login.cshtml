@@ -161,10 +161,9 @@
             accepts: 'application/x-www-form-urlencoded',
             data: obj,
             success: function (data) {
-                if (data!=null) {
-                    localStorage.setItem["User_Name", obj.User_Name];
+                if (data != null) {
                     localStorage["User_Name"] = data;
-                    window.location.href = "http://localhost:49236/Default/Index";
+                    window.location.href = "/Default/MyDeskTop";
                     alert("登录成功");
                 }
                 else {

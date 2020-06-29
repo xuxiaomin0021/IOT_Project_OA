@@ -21,6 +21,12 @@ namespace IOT_Project_OA.BLL.BLL.LoginBLL
         {
             return login.Add(user);
         }
+
+        public List<Base_User> GetUserList()
+        {
+            return login.GetUserList();
+        }
+
         //查询登录
         public Base_User Select(Base_User user)
         {

@@ -39,7 +39,7 @@ namespace IOT_Project_OA.API.Controllers.UserLogin
         /// <returns></returns>
         /// 
         [HttpPost]
-        public string Login([FromForm]Base_User model)
+        public async Task<string> Login([FromForm]Base_User model)
         {
             try
             {
@@ -47,17 +47,16 @@ namespace IOT_Project_OA.API.Controllers.UserLogin
                 Base_User user = loginBll.Select(model);
                 //判断得到的数据是否为空，为空跳转注册
                 if (user != null)
-                { 
+                {
                     //定义字典存放用户登录的信息
                     Dictionary<string, object> keys = new Dictionary<string, object>();
                     keys.Add("User_Name", user.User_Name);
                     keys.Add("User_ID", user.User_ID);
                     keys.Add("User_Pwd", user.User_Pwd);
-                    //得到toekn，给他失效时间
-                    string token = WTHelper.GetToken(keys, 30000);
-                    //登录成功 
-                    return token;
-
+                    //得到toekn，给他失效时间 
+                    string token = await Task.Run(() => { return WTHelper.GetToken(keys, 30000); });
+                    //登录成功  
+                    return token; 
                 }
                 else
                 {
@@ -71,6 +70,43 @@ namespace IOT_Project_OA.API.Controllers.UserLogin
             }
         }
         /// <summary>
+        /// 注册用户判断是否存在
+        /// </summary>
+        /// <returns></returns>
+        /// 
+        [HttpPost]
+        public int CheckUserName(string User_Name)
+        {
+            try
+            {
+                if (User_Name != null)
+                {
+                    List<Base_User> list = loginBll.GetUserList();
+                    foreach (var item in list)
+                    {
+                        if (item.User_Name == User_Name)
+                        {
+                            return 2;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        /// <summary>
         /// 注册
         /// </summary>
         /// <returns></returns>
@@ -78,9 +114,9 @@ namespace IOT_Project_OA.API.Controllers.UserLogin
         [HttpPost]
         public int Register([FromForm]Base_User model)
         {
+
             try
             {
-
                 if (model != null)
                 {
                     int h = loginBll.Add(model);
@@ -93,11 +129,12 @@ namespace IOT_Project_OA.API.Controllers.UserLogin
                         return 0;
                     }
                 }
-
                 else
                 {
+
                     return -1;
                 }
+
             }
             catch (Exception)
             {

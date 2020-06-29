@@ -1,0 +1,113 @@
+﻿
+@{
+    ViewData["Title"] = "Detail";
+}
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<style>
+    h4 {
+        text-align: center;
+        font-size: 50pt;
+        font-family: 汉仪书魂体简;
+        color: #730404
+    }
+
+    hr {
+        width: 90%;
+        margin: 0 auto;
+        border: 0;
+        height: 2px;
+        background: #333;
+        background-image: linear-gradient(to right, #ccc, #333, #ccc);
+    }
+    
+    h6 {
+        font-weight: bold;
+        font-size: 15pt;
+        font-family: 汉仪中圆简;
+        margin-left: 85px
+    }
+
+    .layui-table {
+        margin-left: 700px;
+        margin-top: 50px
+    }
+
+    #Show {
+        font-weight: 900;
+        font-size: 30pt;
+        margin-left: 85px;
+        text-decoration: none
+    }
+</style>
+<a href="#" id="Show"><</a>
+<h4>拜访详情</h4>
+<h6>基本信息</h6>
+<hr />
+<form class="layui-form">
+    <table class="layui-table">
+        <tr>
+            <td>
+                <input type="hidden" id="hid_ID" value="@ViewBag.ID" />
+            </td>
+        </tr>
+        <tr>
+            <td>客户名称：</td>
+            <td><span id="KeHu_Name"></span></td>
+        </tr>
+        <tr>
+            <td>客户类型：</td>
+            <td><span id="KeHu_Type"></span></td>
+        </tr>
+        <tr>
+            <td>计划日期：</td>
+            <td><span id="JiHua_Date"></span></td>
+        </tr>
+        <tr>
+            <td>拜访完成时间：</td>
+            <td><span id="End_Date"></span></td>
+        </tr>
+        <tr>
+            <td>状态：</td>
+            <td><span id="State"></span></td>
+        </tr>
+        <tr>
+            <td>描述：</td>
+            <td><span id="Decs"></span></td>
+        </tr>
+    </table>
+</form>
+<script>
+    $.ajax({
+        url: 'http://localhost:49233/api/Detail?Sale_ID=' + $('#hid_ID').val(),
+        dataType: 'json',
+        type: 'get',
+        success: function (data) {
+            $('#KeHu_Name').html(data.customer_Name);
+            $('#KeHu_Type').html(data.visit_Type);
+            $('#JiHua_Date').html(data.plan_Time);
+            $('#End_Date').html(data.end_Date);
+            $('#Decs').html(data.sale_Desc);
+            if (data.visit_State == "已完成") {
+                $('#State').html('已完成');
+            }
+            else {
+                $('#State').html('未完成');
+            }
+        }
+    });
+    //返回上一页
+    $('#Show').click(function () {
+        window.history.back();
+    });
+
+    layui.use(['form'/*, 'laydate'*/], function () {
+        var form = layui.form;
+        //var laydate = layui.laydate;
+        form.render();
+        //日期时间选择器
+        //laydate.render({
+        //    elem: '#plan_date'
+        //    , type: 'datetime'
+        //});
+    });
+</script>

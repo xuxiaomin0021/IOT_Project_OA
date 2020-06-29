@@ -12,5 +12,6 @@ namespace IOT_Project_OA.Model
         public string QianDate { get; set; }
         public string QianAddress { get; set; }
         public string QianDistince { get; set; }
+        public Guid QianDao_ID { get; set; }
     }
 }

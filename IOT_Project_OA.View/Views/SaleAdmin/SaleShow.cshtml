@@ -1,0 +1,213 @@
+﻿
+@{
+    ViewData["Title"] = "SaleShow";
+}
+
+<link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+<link href="~/layuiadmin/layui/css/modules/layer/default/layer.css" rel="stylesheet" />
+<script src="~/layuiadmin/layui/layui.js"></script>
+<script src="~b/jquery/dist/jquery.js"></script>
+
+<div class="layui-form" style="margin-top:20px">
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" style="width:100px">签到时间范围：</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="txt_date" placeholder=" 请选择要查询的日期范围 ">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label" style="width:100px">拜访名称：</label>
+            <div class="layui-input-inline">
+                <input id="BaiFang_Name" type="text" value="" placeholder="请输入拜访名称" class="layui-input search_input">
+            </div>
+            <label class="layui-form-label" style="width:100px">客户名称：</label>
+            <div class="layui-input-inline">
+                <input id="KeHu_Name" type="text" value="" placeholder="请输入客户名称" class="layui-input search_input">
+            </div>
+            <label class="layui-form-label" style="width:100px">拜访类型：</label>
+            <div class="layui-input-inline">
+                <div class="layui-input-block">
+                    <select id="BaiFang_Type" lay-verify="required">
+                        <option value=""></option>
+                        <option value="日常拜访" id="option">日常拜访</option>
+                        <option value="临时拜访" id="option">临时拜访</option>
+                        <option value="巡店拜访" id="option">巡店拜访</option>
+                    </select>
+                </div>
+            </div>
+            <script type="text/html" id="barDemo">
+                <a class="layui-btn layui-btn-xs" lay-event="edit">查看</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+            </script>
+            <label class="layui-form-label" style="width:100px">状态：</label>
+            <div class="layui-input-inline">
+                <div class="layui-input-inline">
+                    <div class="layui-input-block">
+                        <select id="State" lay-verify="required">
+                            <option value=""></option>
+                            <option value="已完成" id="option">已完成</option>
+                            <option value="未完成" id="option">未完成</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="Select" style="margin-left:60px">
+                <button class="layui-btn layui-btn-xs" data-type="reload" lay-event="Selectpur">查询</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="layui-hide" id="table1" lay-filter="test"></table>
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+        <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+    </div>
+</script>
+<script src="~/layuiadmin/layui/layui.js"></script>
+<script>
+
+    layui.use(['element', 'layer', 'table', 'laypage', 'laydate'], function () {
+        var element = layui.element;
+        var layer = layui.layer;
+        var table = layui.table
+        var laydate = layui.laydate;
+
+        //日期范围
+        laydate.render({
+            elem: '#txt_date'
+            , range: true
+        });
+        //第一个实例
+        table.render({
+            elem: '#table1'
+            , height: 500
+            , toolbar: '#toolbar' //开启头部工具栏，并为其绑定左侧模板
+            , url: 'http://localhost:49233/api/GetSaleManagers' //数据接口
+            , page: true //开启分页
+            , cols: [[ //表头
+                { type: 'checkbox', fixed: 'left' }
+                , { field: 'Visit_Name', title: '拜访名称', width: 80, sort: true }
+                , { field: 'Visit_Type', title: '拜访类型', width: 120, edit: 'text' }
+                , { field: 'Customer_Name', title: '客户名称', width: 80, edit: 'text', sort: true }
+                , { field: 'Plan_Time', title: '计划日期', width: 100 }
+                , { field: 'Visit_State', title: '状态', width: 80, sort: true }
+                , { field: 'Responsible_Name', title: '负责人', width: 80, sort: true }
+                , { field: 'End_Date', title: '拜访完成时间', width: 80, sort: true }
+                , { field: 'TimeLenght', title: '拜访时长', width: 80, sort: true }
+                , { fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150 }
+            ]]
+
+            , parseData: function (res) { //res 即为原始返回的数据
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": res.count, //解析数据长度
+                    "data": res.data //解析数据列表
+                };
+            },
+            id: "TableReload"
+        });
+
+
+        //监听行工具事件
+        table.on('tool(test)', function (obj) {
+            var data = obj.data;
+            //console.log(obj)
+            if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    del(data.Sale_ID)
+                });
+            } else if (obj.event === 'edit') {
+                detail(data.Sale_ID)
+            }
+        });
+
+        //头工具栏事件
+        table.on('toolbar(test)', function (obj) {
+            console.log(obj)
+            var checkStatus = table.checkStatus(obj.Sale_ID);
+            switch (obj.event) {
+                case 'getCheckData':
+                    var data = checkStatus.data;
+                    layer.alert(JSON.stringify(data));
+                    break;
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：' + data.length + ' 个');
+                    break;
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选' : '未全选');
+                    break;
+
+                //自定义头工具栏右侧图标 - 提示
+                case 'LAYTABLE_TIPS':
+                    layer.alert('这是工具栏右侧自定义的一个图标按钮');
+                    break;
+            };
+        });
+
+        //查询
+        var $ = layui.$, active = {
+            reload: function () {
+                var datestr = $("#txt_date").val();
+                var BaiFang_Name = $("#BaiFang_Name").val();
+                var KeHu_Name = $("#KeHu_Name").val();
+                var BaiFang_Type = $("#BaiFang_Type").val();
+                var State = $("#State").val();
+                table.reload("TableReload", {
+                    page: {
+                        curr: 1//重新从1开始
+                    },
+                    where: {
+                        dateTimestr: datestr,
+                        baiFang_Name: BaiFang_Name,
+                        keHu_Name: KeHu_Name,
+                        baiFang_Type: BaiFang_Type,
+                        state: State
+                    }
+                });
+            }
+        };
+
+        //查询
+        $(".Select .layui-btn").on("click", function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        })
+
+
+        //查看详情
+        function detail(sale_ID) {
+            window.location.href = '/SaleAdmin/Detail?Sale_ID=' + sale_ID;
+        }
+
+
+        //删除
+        function del(sale_ID) {
+            $.ajax({
+                url: 'http://localhost:49233/api/Delete?Sale_ID=' + sale_ID,
+                type: 'post',
+                dataType: 'text',
+                contentType: 'application/x-www-form-urlencoded',
+                accepts: "application/x-www-form-urlencoded",
+                success: function (data) {
+                    if (data > 0) {
+                        alert("删除成功");
+                        window.location.href = '/SaleAdmin/SaleShow';
+                    }
+                    else {
+                        alert("删除失败");
+                        return;
+                    }
+                }
+            });
+
+        }
+    });
+
+</script>

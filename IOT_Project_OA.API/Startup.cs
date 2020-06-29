@@ -13,6 +13,10 @@ using IOT_Project_OA.DAL;
 using IOT_Project_OA.BLL;
 using IOT_Project_OA.BLL.IBLL.AssetsIBLL;
 using IOT_Project_OA.BLL.BLL.AssetsBLL;
+using IOT_Project_OA.BLL.IBLL.SaleIBLL;
+using IOT_Project_OA.BLL.BLL.SaleBLL;
+using IOT_Project_OA.DAL.IDAL.SaleIDAL;
+using IOT_Project_OA.DAL.DAL.SaleDAL;
 
 namespace IOT_Project_OA.API
 {
@@ -36,15 +40,19 @@ namespace IOT_Project_OA.API
                 options.AddPolicy("MyCores", builder =>
                 {
                     // 設定允許跨域的來源，有多個的話可以用 `,` 隔開
-                    builder.WithOrigins("http://localhost:49233", "http://localhost:49236")//允许任何来源的主机访问
+                    builder.WithOrigins("http://localhost:49233", "http://localhost:49236", "")//允许任何来源的主机访问
                             .AllowAnyHeader()
                             .AllowAnyMethod()
                             .AllowCredentials();
+
                 });
             });
             //资产档案
-            services.AddSingleton<FilesclassIBLL, FilesclassBLL>();
-            services.AddSingleton<FilesIBLL, FilesBLL>();
+            //services.AddSingleton<FilesclassIBLL, FilesclassBLL>();
+            //services.AddSingleton<FilesIBLL, FilesBLL>();
+            //销售管理
+            services.AddSingleton<SaleaAdminIBLL, SaleaAdminBLL>();
+            services.AddSingleton<SaleaAdminIDAL, SaleaAdminDAL>();
 
         }
 

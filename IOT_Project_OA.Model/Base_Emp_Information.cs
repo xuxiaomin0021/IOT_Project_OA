@@ -26,5 +26,6 @@ namespace IOT_Project_OA.Model
 		 public string  Health { get; set; }
 		 public string  Hobby { get; set; }
 		 public string  Emp_Picture { get; set; }
-	 }
+		public string  Emp_Name { get; set; }
+	}
 }

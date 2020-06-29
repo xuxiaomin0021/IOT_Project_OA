@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace IOT_Project_OA.Model
 {
 	 public class Assets_Apply
-	 {
+	{
 		 public Guid  Apply_ID { get; set; }
 		 public string  Apply_Name { get; set; }
 		 public string  Apply_Depart { get; set; }

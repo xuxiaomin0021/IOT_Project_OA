@@ -11,5 +11,7 @@ namespace IOT_Project_OA.DAL
 
         //总条数
         public int Total { get; set; }
+        //总页数
+        public int count { get; set; }
     }
 }

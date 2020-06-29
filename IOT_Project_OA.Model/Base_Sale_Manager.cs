@@ -15,5 +15,12 @@ namespace IOT_Project_OA.Model
         public string Sale_Desc { get; set; }
         public string Visit_State { get; set; }
         public string End_Date { get; set; }
+        public string Customer_Name { get; set; }
+        public string Responsible_Name { get; set; }
+        public string TimeLenght { get; set; }
+        public string Visit_Name { get; set; }
+        public string Contact_Name { get; set; }
+        public string Agent_Name { get; set; }
+        public Guid Record_ID { get; set; }
     }
 }

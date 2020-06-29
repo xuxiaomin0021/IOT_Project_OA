@@ -71,18 +71,18 @@ namespace IOT_Project_OA.DAL
         /// <param name="orderField">根据id字段进行排序</param>
         /// <param name="PageIndex">页码</param>
         /// <returns></returns>
-        public ProcDataAndTotal<T> GetProcData<T>(string tableName,string whereStr,string orderField,int PageIndex) where T:class,new()
+        public ProcDataAndTotal<T> GetProcData<T>(string tableName, string whereStr, string orderField, int PageIndex) where T : class, new()
         {
             using (IDbConnection conn = new SqlConnection() { ConnectionString = connectionString })
             {
                 var param = new DynamicParameters();
-                param.Add("@table",tableName);
-                param.Add("@field","*");
-                param.Add("@where",whereStr);
-                param.Add("@order",orderField);
-                param.Add("@pageSize",5);
-                param.Add("@pageNumber",PageIndex);
-                param.Add("@Total",0,DbType.Int32,ParameterDirection.Output);
+                param.Add("@table", tableName);
+                param.Add("@field", "*");
+                param.Add("@where", whereStr);
+                param.Add("@order", orderField);
+                param.Add("@pageSize", 5);
+                param.Add("@pageNumber", PageIndex);
+                param.Add("@Total", 0, DbType.Int32, ParameterDirection.Output);
 
                 //返回的类
                 ProcDataAndTotal<T> dataAndTotal = new ProcDataAndTotal<T>()
@@ -116,7 +116,7 @@ namespace IOT_Project_OA.DAL
             }
         }
 
-        
+
         /// <summary>
         /// 泛型反射添加
         /// </summary>
@@ -135,7 +135,7 @@ namespace IOT_Project_OA.DAL
                 {
                     stringBuilder.Append($"'{item.GetValue(model)}',");
                 }
-                string sql = stringBuilder.ToString().Substring(0,stringBuilder.Length-1)+")";
+                string sql = stringBuilder.ToString().Substring(0, stringBuilder.Length - 1) + ")";
                 return conn.Execute(sql);
             }
         }
@@ -146,7 +146,7 @@ namespace IOT_Project_OA.DAL
         /// <typeparam name="T"></typeparam>
         /// <param name="model">将要删除的记录的ID存在model中</param>
         /// <returns></returns>
-        public int DeleteData<T>(T model) where T:class,new()
+        public int DeleteData<T>(T model) where T : class, new()
         {
             using (IDbConnection conn = new SqlConnection() { ConnectionString = connectionString })
             {
@@ -155,12 +155,28 @@ namespace IOT_Project_OA.DAL
                 string sql = $"delete from {t.Name} ";
                 foreach (var item in property)
                 {
-                    if(!string.IsNullOrEmpty(item.GetValue(model).ToString()))
+                    if (!string.IsNullOrEmpty(item.GetValue(model).ToString()))
                     {
                         sql += $" where {item.Name} = '{item.GetValue(model)}'";
                     }
                 }
                 return conn.Execute(sql);
+            }
+        }
+        /// <summary>
+        /// 删除的存储过程
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="param"></param>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public int ProcExec<T>(DynamicParameters param, string sql) where T : class, new()
+        {
+            using (IDbConnection conn = new SqlConnection() { ConnectionString = connectionString })
+            {
+                int code = 0;
+                code = conn.Execute(sql, param, commandType: CommandType.StoredProcedure);
+                return code;
             }
         }
     }

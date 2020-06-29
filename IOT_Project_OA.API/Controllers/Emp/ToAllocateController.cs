@@ -72,7 +72,10 @@ namespace IOT_Project_OA.API.Controllers.Emp
             return bll.Select(); 
         }
 
-
+        /// <summary>
+        /// 获取所有角色
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public List<Base_Role> GetRoleList()
         {

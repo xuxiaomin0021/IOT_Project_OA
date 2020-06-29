@@ -51,9 +51,6 @@
 
     <table id="test" lay-filter="test"></table>
 
-    <div>
-        <img src="D:\实训\项目\Object\IOT_Project_OA.API\wwwroot\Files\c56fa63d-cfab-4688-ba6f-03665cc276d2.jpg" />
-    </div>
 </body>
 </html>
 
@@ -77,8 +74,6 @@
                 , { field: 'Entry_Time', title: '入职时间', width: 100, totalRow: true }
                 , { field: 'Emp_Sex', title: '性别', width: 80, edit: 'text' }
                 , { field: 'Health', title: '健康状况', width: 80, edit: 'text' }
-                , { field: 'Emp_Picture', title: 'avatar', templet: '#img'},
-                , { field: 'Emp_Picture', title: '员工照片', templet: '<div><img src="{{ d.Emp_Picture }}" style="width:30px; height:30px;"></div>'}
                 , { fixed: 'right', title: '操作', toolbar: '#barDemo', width: 200 }
             ]]
             , parseData: function (res) { //res 即为原始返回的数据

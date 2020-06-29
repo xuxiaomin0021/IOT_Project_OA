@@ -12,6 +12,7 @@
     <input type="text" id='role_Name' name="role_Name" lay-verify="required" placeholder="请输入具体角色名称" autocomplete="true" class="layui-input">
 </div>
 <input type="button" value="🔍查询" id="search" class="layui-btn layui-btn-white " data-type="reload"><i class="layui-icon"></i>
+ <input button type="button" id="addRole" class="layui-btn layui-btn-normal" value="添加角色">
 <table class="layui-table">
     <thead>
         <tr>
@@ -38,6 +39,10 @@
 
     $("#search").click(function () {
         GetList();
+    });
+
+    $("#addRole").click(function () {
+        location.href = "CreateRole";
     });
 
     function GetList() {

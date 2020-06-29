@@ -12,12 +12,10 @@ namespace IOT_Project_OA.BLL.IBLL.AssetsIBLL
         /// <summary>
         /// 显示存储过程分页
         /// </summary>
-        /// <param name="tableName">要分页的表名</param>
-        /// <param name="orderField">排序的字段</param>
         /// <param name="whereStr">查询条件</param>
         /// <param name="pageIndex">页码</param>
         /// <returns></returns>
-        public ProcDataAndTotal<Base_Assete_Files> ProcPageData(string whereStr, int pageIndex);
+        public ProcDataAndTotal<Base_Assete_Files> ProcPageData(string whereStr, int pageIndex,int pageSize);
 
 
         /// <summary>
@@ -25,7 +23,7 @@ namespace IOT_Project_OA.BLL.IBLL.AssetsIBLL
         /// </summary>
         /// <param name="files">资产档案model存取ID</param>
         /// <returns></returns>
-        public int DeleteFiles(Base_Assete_Files files);
+        public int DeleteFiles(string Id);
 
 
         /// <summary>

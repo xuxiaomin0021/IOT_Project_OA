@@ -23,8 +23,11 @@ namespace IOT_Project_OA.BLL.BLL.AssetsBLL
         /// </summary>
         /// <param name="files"></param>
         /// <returns></returns>
-        public int DeleteFiles(Base_Assete_Files files)
+        public int DeleteFiles(string Id)
         {
+            Base_Assete_Files files = new Base_Assete_Files() { 
+            Assets_ID = Guid.Parse(Id)
+            };
             return _filesDal.DeleteFiles(files);
         }
 
@@ -54,9 +57,9 @@ namespace IOT_Project_OA.BLL.BLL.AssetsBLL
         /// <param name="whereStr"></param>
         /// <param name="pageIndex"></param>
         /// <returns></returns>
-        public ProcDataAndTotal<Base_Assete_Files> ProcPageData(string whereStr, int pageIndex)
+        public ProcDataAndTotal<Base_Assete_Files> ProcPageData(string whereStr, int pageIndex,int pageSize)
         {
-            return _filesDal.ProcPageData(whereStr,pageIndex);
+            return _filesDal.ProcPageData(whereStr,pageIndex,pageSize);
         }
     }
 }

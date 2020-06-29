@@ -13,6 +13,13 @@ using IOT_Project_OA.DAL;
 using IOT_Project_OA.BLL;
 using IOT_Project_OA.BLL.IBLL.AssetsIBLL;
 using IOT_Project_OA.BLL.BLL.AssetsBLL;
+using IOT_Project_OA.DAL.IDAL.AssetsIDAL;
+using IOT_Project_OA.DAL.DAL.AssetsDAL;
+using IOT_Project_OA.DAL.IDAL.ILoginDal;
+using IOT_Project_OA.DAL.DAL.LoginDal;
+using IOT_Project_OA.BLL.IBLL.ILoginBLL;
+using IOT_Project_OA.BLL.BLL.LoginBLL;
+using IOT_Project_OA.DAL.EmpDAL;
 using IOT_Project_OA.BLL.IBLL.SaleIBLL;
 using IOT_Project_OA.BLL.BLL.SaleBLL;
 using IOT_Project_OA.DAL.IDAL.SaleIDAL;
@@ -48,11 +55,8 @@ namespace IOT_Project_OA.API
                 });
             });
             //资产档案
-            //services.AddSingleton<FilesclassIBLL, FilesclassBLL>();
-            //services.AddSingleton<FilesIBLL, FilesBLL>();
-            //销售管理
-            services.AddSingleton<SaleaAdminIBLL, SaleaAdminBLL>();
-            services.AddSingleton<SaleaAdminIDAL, SaleaAdminDAL>();
+            services.AddSingleton<FilesclassIBLL, FilesclassBLL>();
+            services.AddSingleton<FilesIBLL, FilesBLL>();
 
         }
 

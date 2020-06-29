@@ -1,0 +1,157 @@
+﻿
+@{
+    ViewData["Title"] = "AddEmp";
+}
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<script src="~/layui-v2.5.6/layui/layui.js"></script>
+<link href="~/layui-v2.5.6/layui/css/layui.css" rel="stylesheet" />
+
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+            <label class="layui-form-label">员工姓名:</label>
+            <div class="layui-input-block">
+                <input type="text" id="Emp_Name" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">入职日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" id="test1" placeholder="入职日期">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">身份证</label>
+            <div class="layui-input-block">
+                <input type="text" id="Emp_Code" lay-verify="identity" placeholder="" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">单选框</label>
+            <div class="layui-input-block">
+                <input type="radio" name="sex" value="男" title="男" checked="checked">
+                <input type="radio" name="sex" value="女" title="女">
+                <input type="radio" name="sex" value="禁" title="禁用" disabled="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">员工手机:</label>
+                <div class="layui-input-inline">
+                    <input type="tel" id="Phone" lay-verify="required|phone" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">员工部门</label>
+            <div class="layui-input-block">
+                <select name="interest" lay-filter="aihao" id="Emp_Dept">
+                    <option value="-1">请选择</option>
+                    <option value="开发部">开发部</option>
+                    <option value="行政部">行政部</option>
+                    <option value="财务部">财务部</option>
+                    <option value="销售部">销售部</option>
+                    <option value="市场部">市场部</option>
+                    <option value="人事部">人事部</option>
+                    <option value="科技部">科技部</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">个人信息</label>
+            <div class="layui-input-inline">
+                <input type="text" id="Nominal_Family" lay-verify="required" placeholder="请输入名族" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" id="Native_Place" lay-verify="Native_Place" placeholder="请输入籍贯" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" id="Registered_Residence" lay-verify="Registered_Residence" placeholder="请输入户口所在地" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    <div class="layui-upload-list">
+        <input type="file" id="Emp_Picture"  />
+    </div>
+    <div class="layui-form-item">
+        <button class="layui-btn" id="Add" lay-submit="" lay-filter="demo2">提交</button>
+    </div>
+</form>
+
+
+
+
+<script>
+    
+       
+
+    $("#Add").click(function () {
+        var data = new FormData();
+        var fileUpload = $("#Emp_Picture").get(0);
+        var file = fileUpload.files[0];
+        data.append(file.name, file);
+        var obj = {
+            "Emp_Name": $("#Emp_Name").val(),
+            "Phone": $("#Phone").val(),
+            "Entry_Time": $("#test1").val(),
+            "Emp_Code": $("#Emp_Code").val(),
+            "Emp_Sex": $("[name='sex']:checked").val(),
+            "Emp_Dept": $("#Emp_Dept").find("option:checked").val(),
+            "Born_Time": $("#Emp_Code").val().substring(6, 10) + "-" + $("#Emp_Code").val().substring(10, 12) + "-" + $("#Emp_Code").val().substring(12, 14),
+            "Nominal_Family": $("#Nominal_Family").val(),
+            "Native_Place": $("#Native_Place").val(),
+            "Registered_Residence": $("#Registered_Residence").val(),
+            //"Emp_Picture": data
+        };
+        if (obj.Emp_Dept == "-1") {
+            alert('请选择员工部门!');
+            return;
+        }
+        /*
+        if (data == undefined || data == "" || data == null) {
+            alert('请放入照片!');
+            return;
+        }
+        */
+        
+        console.log(obj);
+        $.ajax({
+            url: "http://localhost:49233/api/Emp/AddEmp?obj=" + JSON.stringify(obj),
+            type: "Post",
+            dataType: "text",
+            contentType: false,
+            processData: false,
+            data: data,
+            success: function (data) {
+                if (data > 0) {
+                    alert('添加成功!');
+                    location.href = "index";
+                } else {
+                    alert('添加失败!');
+                }
+                
+            }
+        });
+
+    });
+
+    layui.use(['form', 'laydate','upload'], function () {
+        var form = layui.form;
+        var laydate = layui.laydate;
+        form.render();
+
+        laydate.render({
+            elem: '#test1'
+        });
+    });
+
+
+</script>
+
+

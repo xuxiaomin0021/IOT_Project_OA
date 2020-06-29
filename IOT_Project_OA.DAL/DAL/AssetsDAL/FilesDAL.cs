@@ -49,9 +49,9 @@ namespace IOT_Project_OA.DAL.DAL.AssetsDAL
         /// <param name="whereStr">条件</param>
         /// <param name="pageIndex">页码</param>
         /// <returns></returns>
-        public ProcDataAndTotal<Base_Assete_Files> ProcPageData(string whereStr, int pageIndex)
+        public ProcDataAndTotal<Base_Assete_Files> ProcPageData(string whereStr, int pageIndex,int pageSize)
         {
-            return dapper.GetProcData<Base_Assete_Files>("Base_Assete_Files", "Assets_ID", whereStr,pageIndex);
+            return dapper.GetProcData<Base_Assete_Files>("Base_Assete_Files", whereStr, "Assets_ID", pageIndex,pageSize);
         }
     }
 }

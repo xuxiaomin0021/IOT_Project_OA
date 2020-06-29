@@ -1,0 +1,115 @@
+﻿
+@{
+    ViewData["Title"] = "ShowFiles";
+}
+<div class="layui-form-item" style="margin:20px">
+    <label class="layui-form-label">资产编号</label>
+    <div class="layui-input-inline">
+        <input type="text" id="Assets_No" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+    </div>
+
+    <label class="layui-form-label">资产名称</label>
+    <div class="layui-input-inline">
+        <input type="text" id="Assets_Name" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+    </div>
+
+    <label class="layui-form-label">资产分类</label>
+    <div class="layui-input-inline">
+        <select id="Assets_Type" lay-verify="required" lay-search="" class="layui-select">
+            <option value="">--请选择--</option>
+            <option value="固定资产">固定资产</option>
+            <option value="移动资产">移动资产</option>
+            <option value="临时资产">临时资产</option>
+        </select>
+    </div>
+
+    <label class="layui-form-label">资产类型</label>
+    <div class="layui-input-inline">
+        <select id="Assets_Class" lay-verify="required" lay-search="" class="layui-select">
+            <option value="">--请选择--</option>
+        </select>
+    </div>
+
+    <label class="layui-form-label">资产状态</label>
+    <div class="layui-input-inline">
+        <select id="State" lay-verify="required" lay-search="" class="layui-select">
+            <option value="">--请选择--</option>
+            <option value="使用中">使用中</option>
+            <option value="空闲">空闲</option>
+        </select>
+    </div>
+</div>
+<table class="layui-table" style="margin:20px">
+    <tr>
+        <td>资产编号</td>
+        <td>资产名称</td>
+        <td>资产类型</td>
+        <td>资产分类</td>
+        <td>当前状态</td>
+        <td>使用人</td>
+        <td>操作</td>
+    </tr>
+    <tbody id="Tbody"></tbody>
+</table>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    //页码
+    var pageIndex = 1;
+    //总页数
+    var Total = 0;
+    //页面加载事件
+    $(function () {
+        //获取所有的资产类型
+        $.ajax({
+            url: "http://localhost:49233/Assetsclass/GetclassData",
+            type: "get",
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                console.log(data);
+                $.each(data, function (index, item) {
+                    if (item.up_Class_Name == 1) {
+                        var optgroup = "<optgroup label='" + item.class_Name + "'>";
+                        var option = "";
+                        $.each(data, function (i, t) {
+                            if (item.asset_TypeID == t.up_Class_Name) {
+                                option += "<option value='" + t.class_Name + "'>" + t.class_Name + "</option>";
+                            }
+                        })
+                    }
+                    $("#Assets_Class").append(optgroup + option + "</optgroup>");
+                })
+            }
+        })
+
+        //显示第一页的数据
+        $.ajax({
+            url: "http://localhost:49233/Files/ProcGetFilesdata?pageIndex=" + pageIndex,
+            type: "get",
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                //console.log(data.procData);
+                Jointtr(data);
+            }
+        })
+    })
+
+    //拼接tr
+    function Jointtr(data) {
+        //console.log(data.total);
+        //清空
+        $("#Tbody").empty();
+        Total = data.Total;
+        $.each(data.procData, function (index, item) {
+            var str = "<tr><td>" + item.assets_No + "</td>" +
+                "<td>" + item.assets_Name + "</td>" +
+                "<td>" + item.assets_Class + "</td>" +
+                "<td>" + item.assets_Type + "</td>" +
+                "<td>" + item.state + "</td>" +
+                "<td>" + item.emtry_Time + "</td>" +
+                "<td>" + item.use_Person + "</td>" +
+                "<td></td></tr >";
+            $("#Tbody").append(str);
+        })
+    }
+</script>

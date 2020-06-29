@@ -1,53 +1,209 @@
 ﻿
 <!DOCTYPE html>
-<style>
-    .div1 {
-        width: 170px;
-        height: 75px;
-        background-color: aqua;
-        float: left;
-        margin-left: 63px;
-        margin-top: 40px;
-    }
 
-    .div2 {
-        width: 100%;
-        height: 160px;
-        background-color: cornsilk
-    }
-
-    .div3 {
-        width: 90px;
-        height: 115px;
-        /*background-color: aqua;*/
-        float: left;
-        margin-left: 100px;
-        margin-top: 40px;
-    }
-    .div4 {
-        width: 90px;
-        height: 115px;
-        /*background-color: aqua;*/
-        float: left;
-        margin-left: 100px;
-        margin-top: 40px;
-    }
-    .img {
-        width: 68px;
-        height: 58px;
-        float: left;
-    }
-    .img1 {
-        width: 40px;
-        height: 58px;
-        float: left;
-    }
-    .lab {
-        padding-top: 20px;
-    }
-</style>
 <html>
 <head>
+    <style>
+        .AllDiv {
+            margin-left: 15px;
+        }
+
+        .div1 {
+            width: 170px;
+            height: 75px;
+            /*// background-color: aqua;*/
+            float: left;
+            margin-left: 63px;
+            margin-top: 40px;
+            font-size: 16px;
+        }
+
+        .div2 {
+            width: 100%;
+            height: 160px;
+            background-color: gainsboro;
+        }
+
+        .div3 {
+            width: 90px;
+            height: 100px;
+            float: left;
+            margin-left: 100px;
+            margin-top: 40px;
+            font-size: 16px;
+        }
+
+        .div4 {
+            width: 90px;
+            height: 115px;
+            float: left;
+            margin-left: 100px;
+            margin-top: 40px;
+            font-size: 16px;
+        }
+
+        .div5 {
+            width: 45px;
+            height: 100px;
+            float: left;
+            margin-left: 100px;
+            margin-top: 40px;
+            font-size: 16px;
+        }
+
+        .img {
+            width: 68px;
+            height: 58px;
+            float: left;
+        }
+
+        .img1 {
+            width: 40px;
+            height: 58px;
+            float: left;
+        }
+
+        .img2 {
+            padding-top: 15px;
+            padding-left: 25px;
+        }
+
+        .img3 {
+            margin-left: 9px;
+            background-color: white;
+        }
+
+        .lab {
+            padding-top: 20px;
+            float: left;
+        }
+
+        .lab2 {
+            float: right;
+            font-size: 16px;
+            padding-bottom: 30px;
+        }
+
+        .box_1 {
+            background-color: darkgray;
+            width: 330px;
+            height: 126px;
+            float: left;
+        }
+
+        .box_2 {
+            /*background-color: lavender;*/
+            padding-top: 15px;
+            margin-top: 50px;
+        }
+
+        .box_3 {
+            background-color: darkgray;
+            width: 330px;
+            height: 126px;
+            float: left;
+            margin-left: 50px;
+        }
+
+        .box_4 {
+            /*background-color: aquamarine;*/
+            width: 330px;
+            height: 70px;
+        }
+
+        .box_5 {
+            float: left;
+            /*background-color:blue;*/
+            padding-top: 20px;
+        }
+
+        .box_6 {
+            float: left;
+            /*background-color: blueviolet;*/
+            padding-top: 25px;
+            padding-left: 145px;
+        }
+
+        .box_heart {
+            width: 720px;
+            height: 520px;
+            /*//background-color: aqua;*/
+        }
+
+        .data_Add {
+            margin-top: 50px;
+        }
+
+        .Sale {
+            float: right;
+            padding-top: 50px;
+            padding-right: 25px;
+            font-size: 18px;
+        }
+
+        .play {
+            font-size: 16px;
+            color: darkorange;
+        }
+
+        .number {
+            /*background-color: blueviolet;*/
+            float: right;
+            /*margin-top:20px;*/
+            font-size: 35px;
+            margin-left: 30px;
+            margin-bottom: 44px;
+        }
+
+        .layui-tab-content {
+            width: 600px;
+            height: 120px;
+        }
+        /*//用于日历的css用于设置日历表头和日期数据的栅格显示*/
+        .calendar {
+            width: 450px;
+            height: 350px;
+            background: #fff;
+            box-shadow: 0px 1px 1px rgba(0,0,0,0.1);
+        }
+
+        .body-list ul {
+            width: 100%;
+            font-family: arial;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+            .body-list ul li {
+                width: 14.28%;
+                height: 36px;
+                line-height: 36px;
+                list-style-type: none;
+                display: block;
+                box-sizing: border-box;
+                float: left;
+                text-align: center;
+            }
+        /*为今天、今天之前及今天之后的日期分别创建了不同的类。其中，
+            用浅灰色来显示过去的日期，深灰色来显示将来的日期，
+            日期当天则使用浅绿色背景、绿色文字加以显示*/
+        .lightgrey {
+            color: #a8a8a8; /*浅灰色*/
+        }
+
+        .darkgrey {
+            color: #565656; /*深灰色*/
+        }
+
+        .green {
+            color: #6ac13c; /*绿色*/
+        }
+
+        .greenbox {
+            border: 1px solid #6ac13c;
+            background: #e9f8df; /*浅绿色背景*/
+        }
+    </style>
     <meta charset="utf-8">
     <title>Layui</title>
     <meta name="renderer" content="webkit">
@@ -55,71 +211,308 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+    <script>
+
+        //页面刚加载的时候，开始判断，如果有用户名，就显示在页面上，如果没有用户名的话，就显示登录名称
+        $(function () {
+            var storage = window.localStorage["User_Name"];
+            var data =
+            {
+                uname: "User_Name"
+            }
+            if (data == 0) {
+                $("#laName").show("未登录");
+                $("#uname").html('');
+            } else {
+                var t = JSON.stringify(data);
+                storage.setItem("data", t);
+                var json = storage.setItem("data");
+                var jsonObj = JSON.parse(json);
+                alert(jsonObj);
+                $("#laName").hide();
+                $("#uname").html(jsonObj);
+
+            }
+        })
+    </script>
 </head>
-<body>
-    <div class="div2">
-        <div class="div1">
+<body onload="load_data()">
+
+    <div class="AllDiv">
+        <div class="div2">
+            <div class="div1">
+                <a href="/Default/Login">
+                    欢迎<label id="laName"><span id="uname"></span></label>云办公OA
+                </a>
+            </div>
+            <div class="div3">
+                <a href="/Default/MyDeskTop">
+                    <img class="img" src="~/Images/1.png" />
+                    <label class="lab">&nbsp;我的桌面</label>
+                </a>
+            </div>
+            <div class="div3">
+                <a href="#">
+                    <img class="img" src="~/Images/2.png" />
+                    <label class="lab">&nbsp;事务管理</label>
+                </a>
+            </div>
+            <div class="div3">
+                <a href="#">
+                    <img class="img" src="~/Images/3.png" />
+                    <label class="lab">&nbsp;销售管理</label>
+                </a>
+            </div>
+            <div class="div3">
+                <a href="#">
+                    <img class="img" src="~/Images/4.png" />
+                    <label class="lab">&nbsp;人力资源</label>
+                </a>
+            </div>
+            <div class="div3">
+                <a href="#">
+                    <img class="img" src="~/Images/5.png" />
+                    <label class="lab">&nbsp;会议管理</label>
+                </a>
+            </div>
+            <div class="div3">
+                <a href="#">
+                    <img class="img" src="~/Images/7.png" />
+                    <label class="lab">&nbsp;系统管理</label>
+                </a>
+            </div>
+            <div class="div5">
+                <a href="#">
+                    <img class="img1" src="~/Images/8.png" /><br />
+                    <label class="lab">&nbsp;更多</label>
+                </a>
+            </div>
         </div>
-        <div class="div3">
-            <a href="/Default/MyDeskTop">
-                <img class="img" src="~/Images/1.png" />
-                <label class="lab">&nbsp;我的桌面</label>
-            </a>
-        </div>
-        <div class="div3">
-            <a href="#">
-                <img class="img" src="~/Images/2.png" />
-                <label class="lab">&nbsp;事务管理</label>
-            </a>
-        </div>
-        <div class="div3">
-            <a href="#">
-                <img class="img" src="~/Images/3.png" />
-                <label class="lab">&nbsp;销售管理</label>
-            </a>
-        </div>
-        <div class="div3">
-            <a href="#">
-                <img class="img" src="~/Images/4.png" />
-                <label class="lab">&nbsp;人力资源</label>
-            </a>
-        </div>
-        <div class="div3">
-            <a href="#">
-                <img class="img" src="~/Images/5.png" />
-                <label class="lab">&nbsp;会议管理</label>
-            </a>
-        </div>
-        <div class="div3">
-            <a href="#">
-                <img class="img" src="~/Images/7.png" />
-                <label class="lab">&nbsp;系统管理</label>
-            </a>
-        </div>
-        <div class="div3">
-            <a href="#">
-                <img class="img1" src="~/Images/8.png" /><br />
-                <label class="lab">&nbsp;更多</label>
-            </a>
+        <div class="layui-tab">
+            <ul class="layui-tab-title">
+                <li class="layui-this">我的桌面</li>
+                <li>人员档案</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <div class="box_heart">
+                        <div id="u" class="box_1">
+                            <div id="u2095_div" class="img2">
+                                <div class="box_4">
+                                    <div class="box_5">
+                                        <img class="img3" src="~/Images/2.png" />
+                                        <br />
+                                        <label style="float:left;font-size:16px;" href="/SaleAdmin/SaleAdd">拜访客户</label>
+                                    </div>
+                                    <div class="box_6">
+                                        <span class="number">66</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="u" class="box_3">
+                            <div id="u2095_div" class="img2">
+                                <div class="box_4">
+                                    <div class="box_5">
+                                        <img class="img3" src="~/Images/2.png" />
+                                        <br />
+                                        <label style="float:left;font-size:16px;">获取 商机</label>
+                                    </div>
+                                    <div class="box_6">
+                                        <span class="number">99</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br /><br />
+                        <div id="u" class="box_2">
+                            <div class="data_Add">
+                                <br />
+                                <label class="play">本月拜访计划</label><br />
+                                <hr style="border:ridge 1px;" />
+                                <a href="SaleAdmin/SaleAdd" class="Sale"><label>新增一个拜访</label></a>
+                                <div class="data">
+                                    <div class="calendar">
+                                        <div class="title">
+                                            <h1 class="green" id="calendar-title">Month</h1>
+                                            <h2 class="green small" id="calendar-year">Year</h2>
+                                            <a href="" id="prev">Prev Month</a>
+                                            <a href="" id="next">Next Month</a>
+                                        </div>
+                                        <div class="body">
+                                            <div class="lightgrey body-list">
+                                                <ul>
+                                                    <li>星期一</li>
+                                                    <li>星期二</li>
+                                                    <li>星期三</li>
+                                                    <li>星期四</li>
+                                                    <li>星期五</li>
+                                                    <li>星期六</li>
+                                                    <li>星期日</li>
+                                                </ul>
+                                            </div>
+                                            <div class="darkgrey body-list">
+                                                <ul id="days">
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <br>
+                </div>
+                <div class="layui-tab-item">
+                    <table class="layui-hide" id="demo" lay-filter="test"></table>
+                </div>
+
+            </div>
+
         </div>
     </div>
-    <div>
-        <br>
-        <ul class="layui-nav layui-bg-blue">
-            <li class="layui-nav-item"><a href="">我的桌面</a></li>
-        </ul>
-    </div>
-    <script src="//res.layui.com/layui/dist/layui.js" charset="utf-8"></script>
+
+
+
+    <script src="~/layuiadmin/layui/layui.js"></script>
     <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
     <script>
+
         layui.use('element', function () {
             var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
             //监听导航点击
             element.on('nav(demo)', function (elem) {
-                //console.log(elem)
                 layer.msg(elem.text());
             });
         });
+
+        //JavaScript生成日历
+        //接着使用JavaScript来动态生成日历信息。首先，我们要做一些前期的准备工作.
+        //由于闰年和非闰年的二月天数是不一样的，在此我们为这两种年份分别创建数组,
+        //以便于获取每个月的天数，同时为每个月份的英文名创建相应的数组变量
+        var month_olympic = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        var month_normal = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        var month_name = ["January", "Febrary", "March", "April", "May", "June", "July", "Auguest", "September", "October", "November", "December"];
+        //设置后期需要的变量
+        var holder = document.getElementById("days");
+        var prev = document.getElementById("prev");
+        var next = document.getElementById("next");
+        var ctitle = document.getElementById("calendar-title");
+        var cyear = document.getElementById("calendar-year");
+        //Date对象来获取当前的日期时间
+        var my_date = new Date();
+        var my_year = my_date.getFullYear();//获取当前的年
+        var my_month = my_date.getMonth();//获取当前的月份
+        var my_day = my_date.getDate();//获取当前的日期
+        //获取某年某月第一天是星期几
+        function dayStart(month, year) {
+            var tmpDate = new Date(year, month, 1);
+            return (tmpDate.getDay());
+        }
+        //计算某年是不是闰年，通过求年份除以4的余数即可
+        function daysMonth(month, year) {
+            var tmp = year % 4;
+            if (tmp == 0) {
+                return (month_olympic[month]);
+            } else {
+                return (month_normal[month]);
+            }
+        }
+        //生成月份显示
+        function refreshDate() {
+            var str = "";
+            var totalDay = daysMonth(my_month, my_year); //获取该月总天数
+            var firstDay = dayStart(my_month, my_year); //获取该月第一天是星期几
+            var myclass;
+            for (var i = 1; i < firstDay; i++) {
+                str += "<li></li>"; //为起始日之前的日期创建空白节点
+            }
+            for (var i = 1; i <= totalDay; i++) {
+                if ((i < my_day && my_year == my_date.getFullYear() && my_month == my_date.getMonth()) || my_year < my_date.getFullYear() || (my_year == my_date.getFullYear() && my_month < my_date.getMonth())) {
+                    myclass = " class='lightgrey'"; //当该日期在今天之前时，以浅灰色字体显示
+                } else if (i == my_day && my_year == my_date.getFullYear() && my_month == my_date.getMonth()) {
+                    myclass = " class='green greenbox'"; //当天日期以绿色背景突出显示
+                } else {
+                    myclass = " class='darkgrey'"; //当该日期在今天之后时，以深灰字体显示
+                }
+                str += "<li" + myclass + ">" + i + "</li>"; //创建日期节点
+            }
+            holder.innerHTML = str; //设置日期显示
+            ctitle.innerHTML = month_name[my_month]; //设置英文月份显示
+            cyear.innerHTML = my_year; //设置年份显示
+        }
+        refreshDate(); //执行该函数
+        //实现日期的交互变化显示日期
+        prev.onclick = function (e) {
+            e.preventDefault();
+            my_month--;
+            if (my_month < 0) {
+                my_year--;
+                my_month = 11;
+            }
+            refreshDate();
+        }
+        next.onclick = function (e) {
+            e.preventDefault();
+            my_month++;
+            if (my_month > 11) {
+                my_year++;
+                my_month = 0;
+            }
+            refreshDate();
+        }
+
+        layui.use(['laypage', 'layer', 'table', 'element'], function () {
+
+            var laypage = layui.laypage //分页
+                , layer = layui.layer //弹层
+                , table = layui.table //表格
+                , element = layui.element //元素操作
+
+            //监听Tab切换
+            element.on('tab(demo)', function (data) {
+                layer.tips('切换了 ' + data.index + ':' + this.innerHTML, this, {
+                    tips: 1
+                });
+            });
+
+            //执行一个 table 实例
+            table.render({
+                elem: '#demo'
+                , height: 420
+                , width: 1900
+                , url: 'http://localhost:49233/Api/Emp/order' //数据接口
+                , title: '员工档案'
+                , page: true //开启分页
+                , toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+                , totalRow: true //开启合计行
+                , cols: [[ //表头
+                    { type: 'checkbox', fixed: 'left' }
+                    , { field: 'Emp_Name', title: '员工姓名', width: 80 }
+                    , { field: 'Born_Time', title: '出生日期', width: 200 }
+                    , { field: 'Emp_Sex', title: '性别', width: 90, sort: true, totalRow: true }
+                    , { field: 'Phone', title: '手机号码', width: 80, sort: true }
+                    , { field: 'Emp_Dept', title: '部门', width: 80, sort: true, totalRow: true }
+                    , { field: 'Emp_Post', title: '岗位', width: 150 }
+                    , { field: 'Native_Place', title: '籍贯', width: 200 }
+                    , { field: 'Entry_Time', title: '入职时间', width: 135, sort: true, totalRow: true }
+                    , { fixed: 'right', width: 165, align: 'center', toolbar: '#barDemo' }
+                ]]
+            });
+            //分页
+            laypage.render({
+                elem: 'Emp_ID' //分页容器的id
+                , count: 100 //总页数
+                , skin: '#1E9FFF' //自定义选中色值
+                //,skip: true //开启跳页
+                , jump: function (obj, first) {
+                    if (!first) {
+                        layer.msg('第' + obj.curr + '页', { offset: 'b' });
+                    }
+                }
+            });
+        })
     </script>
 </body>
 </html>

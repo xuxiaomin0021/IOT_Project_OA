@@ -32,9 +32,12 @@ namespace IOT_Project_OA.BLL.BLL.AssetsBLL
         /// </summary>
         /// <param name="classId"></param>
         /// <returns></returns>
-        public int DeleteFilesClass(Assets_Class classId)
+        public int DeleteFilesClass(string classId)
         {
-            return _filesclassDal.DeleteFilesClass(classId);
+            Assets_Class assets = new Assets_Class() {
+                Asset_TypeID = int.Parse(classId)
+            };
+            return _filesclassDal.DeleteFilesClass(assets);
         }
 
 

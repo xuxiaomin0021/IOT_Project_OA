@@ -5,10 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 namespace IOT_Project_OA.Model
 {
-	 public class Base_Role
-	 {
-		 public Guid  Role_ID { get; set; }
-		 public string  Role_Name { get; set; }
-		 public string  Role_Desc { get; set; }
-	 }
+	/// <summary>
+	/// ½ÇÉ«±í
+	/// </summary>
+	public class Base_Role
+	{
+		public int ID { get; set; }
+		public string Role_Name { get; set; }
+		public string Role_Desc { get; set; }
+		public string CreateDate { get; set; }
+	}
 }

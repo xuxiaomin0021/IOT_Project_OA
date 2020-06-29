@@ -14,7 +14,7 @@
     <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
     <link href="~/layuiadmin/style/admin.css" rel="stylesheet" />
 
-    <script>
+    <script> 
         /^http(s*):\/\//.test(location.href) || alert('请先部署到 localhost 下再访问');
     </script>
 </head>
@@ -28,11 +28,6 @@
                     <li class="layui-nav-item layadmin-flexible" lay-unselect>
                         <a href="javascript:;" layadmin-event="flexible" title="侧边伸缩">
                             <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
-                        </a>
-                    </li>
-                    <li class="layui-nav-item layui-hide-xs" lay-unselect>
-                        <a href="http://www.layui.com/admin/" target="_blank" title="前台">
-                            <i class="layui-icon layui-icon-website"></i>
                         </a>
                     </li>
                     <li class="layui-nav-item" lay-unselect>
@@ -69,18 +64,6 @@
                             <i class="layui-icon layui-icon-screen-full"></i>
                         </a>
                     </li>
-                    <li class="layui-nav-item" lay-unselect>
-                        <a href="javascript:;">
-                            <cite>个人信息</cite>
-                        </a>
-                        <dl class="layui-nav-child">
-                            <dd><a lay-href="set/user/info.html">基本资料</a></dd>
-                            <dd><a lay-href="set/user/password.html">修改密码</a></dd>
-                            @*<hr />*@
-                            <dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>
-                        </dl>
-                    </li>
-
                     <li class="layui-nav-item layui-hide-xs" lay-unselect>
                         <a href="javascript:;" layadmin-event="about"><i class="layui-icon layui-icon-more-vertical"></i></a>
                     </li>
@@ -93,7 +76,7 @@
             <!-- 侧边菜单 -->
             <div class="layui-side layui-side-menu">
                 <div class="layui-side-scroll">
-                    <div class="layui-logo" lay-href="/default">
+                    <div class="layui-logo" lay-href="/default/Login">
                         <span>OA办公</span>
                     </div>
 
@@ -139,25 +122,22 @@
                             </dl>
                         </li>
                         <li data-name="component" class="layui-nav-item">
-                            <a lay-href="/SaleAdmin/SaleShow" lay-tips="销售管理" lay-direction="2">
+                            <a href="javascript:;" lay-tips="销售管理" lay-direction="2">
                                 <i class="layui-icon layui-icon-component"></i>
                                 <cite>销售管理</cite>
                             </a>
                             <dl class="layui-nav-child">
                                 <dd data-name="panel">
-                                    <a lay-href="/SaleAdmin/Detail">拜访计划管理-详情</a>
-                                </dd>
-                                <dd data-name="panel">
-                                    <a lay-href="/SaleAdmin/SaleAdd">拜访计划管理-新增</a>
+                                    <a lay-href="/VisitPlan">拜访计划管理</a>
                                 </dd>
                                 <dd data-name="badge">
-                                    <a lay-href="/SaleAdmin/VisitShow">拜访数据统计</a>
+                                    <a lay-href="/VisitData">拜访数据统计</a>
                                 </dd>
                                 <dd data-name="timeline">
-                                    <a lay-href="/SaleAdmin/SignInShow">外勤签到管理</a>
+                                    <a lay-href="/WorkIn">外勤签到管理</a>
                                 </dd>
                                 <dd data-name="timeline">
-                                    <a lay-href="/SaleAdmin/QianDaoAdd">外勤签到添加</a>
+                                    <a lay-href="/WorkInData">外勤签到统计</a>
                                 </dd>
                             </dl>
                         </li>
@@ -257,7 +237,7 @@
                                             <a href="javascript:;" lay-href="component/grid/list">创建角色</a>
                                         </dd>
                                     </dl>
-                                </dd>
+                                </dd> 
                             </dl>
                         </li>
                         <li data-name="template" class="layui-nav-item">
@@ -330,51 +310,6 @@
                                 </dd>
                             </dl>
                         </li>
-                        <li data-name="user" class="layui-nav-item">
-                            <a href="javascript:;" lay-tips="用户" lay-direction="2">
-                                <i class="layui-icon layui-icon-user"></i>
-                                <cite>用户</cite>
-                            </a>
-                            <dl class="layui-nav-child">
-                                <dd>
-                                    <a lay-href="user/user/list.html">网站用户</a>
-                                </dd>
-                                <dd>
-                                    <a lay-href="user/administrators/list.html">后台管理员</a>
-                                </dd>
-                                <dd>
-                                    <a lay-href="user/administrators/role.html">角色管理</a>
-                                </dd>
-                            </dl>
-                        </li>
-                        <li data-name="set" class="layui-nav-item">
-                            <a href="javascript:;" lay-tips="设置" lay-direction="2">
-                                <i class="layui-icon layui-icon-set"></i>
-                                <cite>设置</cite>
-                            </a>
-                            <dl class="layui-nav-child">
-                                <dd class="layui-nav-itemed">
-                                    <a href="javascript:;">系统设置</a>
-                                    <dl class="layui-nav-child">
-                                        <dd><a lay-href="set/system/website.html">网站设置</a></dd>
-                                        <dd><a lay-href="set/system/email.html">邮件服务</a></dd>
-                                    </dl>
-                                </dd>
-                                <dd class="layui-nav-itemed">
-                                    <a href="javascript:;">我的设置</a>
-                                    <dl class="layui-nav-child">
-                                        <dd><a lay-href="set/user/info.html">基本资料</a></dd>
-                                        <dd><a lay-href="set/user/password.html">修改密码</a></dd>
-                                    </dl>
-                                </dd>
-                            </dl>
-                        </li>
-                        <li data-name="get" class="layui-nav-item">
-                            <a href="javascript:;" lay-href="http://www.layui.com/admin/#get" lay-tips="授权" lay-direction="2">
-                                <i class="layui-icon layui-icon-auz"></i>
-                                <cite>授权</cite>
-                            </a>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -406,7 +341,7 @@
             <!-- 主体内容 -->
             <div class="layui-body" id="LAY_app_body">
                 <div class="layadmin-tabsbody-item layui-show">
-                    <iframe src="home/console.html" frameborder="0" class="layadmin-iframe"></iframe>
+                    @*<iframe src="home/console.html" frameborder="0" class="layadmin-iframe"></iframe>*@
                 </div>
             </div>
 
@@ -416,13 +351,144 @@
     </div>
 
     <script src="../layuiadmin/layui/layui.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
     <script>
+
         layui.config({
             base: '../layuiadmin/' //静态资源所在路径
         }).extend({
             index: 'lib/index' //主入口模块
         }).use('index');
+
+        var li = '';
+        var quan = '';
+        //页面加载
+
+        $(function () {
+            var token = localStorage["User_Name"];
+
+            $.ajax({
+                url: "http://localhost:49233/api/UserLogin/Menus",
+                type: "get",
+                async: false,
+                dataType: "text",
+                data: { token: token }
+            }).done(function (data) {
+                if (data == null) {
+                    alert('请先登录!');
+                    location.href = "Default/Login";
+                    return;
+                }
+                quan = data;
+               
+            });
+            FinOne();
+
+
+        });
+
+        function FinOne() {
+
+            $.ajax({
+                url: "http://localhost:49233/api/Desk/GetQuan",
+                type: "get",
+                dataType: "json",
+                async: false,
+            }).done(function (data) {
+                //第一级菜单
+                $.each(data, function (i, t) {
+                    //调用方法
+                    li = '<li data-name="component" class="layui-nav-item">';
+                    li += '<a href="javascript:;" lay-tips="' + t.menu_Name + '" lay-direction="2">';
+                    li += '<i class="layui-icon layui-icon-home"></i>';
+                    li += '<i class="layui-icon layui-icon-component"></i>';
+
+
+                    li += '<cite lay-href="' + t.menu_Url + '">' + t.menu_Name + '</cite>';
+                    li += '<span class="layui-nav-more" ></span></a>';
+                    li += '</a>';
+                    //容易出错
+                    //li += '<dl class="layui-nav-child">';
+                    li += '<dl class="layui-nav-child">';
+                    FindTwo(t.id);
+                    li += '</dl></dd></dl></li>';
+                    if (quan.search(t.menu_Name) != -1) {
+                        $("#LAY-system-side-menu").append(li);
+                    } else {
+                    }
+
+                });
+
+            });
+        }
+
+        function FindTwo(id) {
+            //循环查找第二级菜单
+            $.ajax({
+                url: "http://localhost:49233/api/Desk/GetQuan",
+                type: "get",
+                dataType: "json",
+                async: false,
+                data: { upId: id }
+            }).done(function (result) {
+                //调用三级菜单
+                /*
+                if (result == null || result == undefined || result == "") {
+                    li += '<dl>';
+                } else {
+                    li += '<dl class="layui-nav-child">';
+                }
+                */
+                $.each(result, function (i, t) {
+                    //t.menu_Url
+                    li += '<dd data-name="grid" data-jump="" class="layui-nav-itemed">';
+                    // li += '<a href="javascript:;" onclick="Location(\'' + t.menu_Url+'\')" >' + t.menu_Name + '<span class="layui-nav-more"></span></a>';
+                    //li += '<dl class="layui-nav-child">';
+                    li += '<a href="javascript:;" lay-href="' + t.menu_Url + '"   >' + t.menu_Name + '<span class="layui-nav-more"  ></span></a>';
+                    li += '<dl class="layui-nav-child"   >';
+                    FindThree(t.id);
+                });
+
+            });
+        }
+
+        function FindThree(id) {
+
+            $.ajax({
+                url: "http://localhost:49233/api/Desk/GetQuan",
+                type: "get",
+                dataType: "json",
+                async: false,  //同步
+                data: { upId: id }
+            }).done(function (result) {
+                /*
+                if (result == null || result == undefined || result == "") {
+                    li += '<dl>';
+                } else {
+                    li += '<dl class="layui-nav-child">';
+                }
+                */
+
+                $.each(result, function (i, t) {
+                    li += '<dd data-name="mobile" data-jump="">';
+                    li += '<a href="javascript:;" lay-href="' + t.menu_Url + '"   >' + t.menu_Name + '</a>';
+                    li += '</dd>';
+                });
+
+            });
+
+
+        }
+
+        /*
+        function Location(url) {
+            //window.open(url);     //在新窗口中打开窗口
+            //window.open(newpage.href, url);
+        }
+        */
+
     </script>
+
 </body>
 </html>
 

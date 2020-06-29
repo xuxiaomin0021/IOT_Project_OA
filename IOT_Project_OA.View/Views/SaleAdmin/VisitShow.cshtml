@@ -1,0 +1,121 @@
+﻿
+@{
+    ViewData["Title"] = "SignInShow";
+}
+<link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+<link href="~/layuiadmin/layui/css/modules/layer/default/layer.css" rel="stylesheet" />
+<script src="~/layuiadmin/layui/layui.js"></script>
+<script src="~b/jquery/dist/jquery.js"></script>
+<div class="layui-form" style="margin-top:20px">
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:100px">客户名称：</label>
+        <div class="layui-input-inline">
+            <input id="KeHu_Name" type="text" value="" placeholder="请输入客户名称" class="layui-input search_input">
+        </div>
+        <label class="layui-form-label" style="width:100px">负责人：</label>
+        <div class="layui-input-inline">
+            <input id="FuZeRen" type="text" value="" placeholder="请输入客户名称" class="layui-input search_input">
+        </div>
+        <div class="Select" style="margin-left:60px">
+            <button class="layui-btn layui-btn-xs" data-type="reload" lay-event="Selectpur">查询</button>
+        </div>
+    </div>
+</div>
+
+<table class="layui-hide" id="table1" lay-filter="test"></table>
+
+<script src="~/layuiadmin/layui/layui.js"></script>
+<script>
+    //绑定员工
+    $.get('http://localhost:49233/api/GetEmps', function (data) {
+        $('#Emp_Name').empty();
+        $.each(data, function (index, item) {
+            var option = '<option value=""></option>';
+            option += '<option value="' + item.emp_Name + '">' + item.emp_Name + '</option>';
+            $('#Emp_Name').append(option);
+        })
+        layui.use('form', function () {
+            var form = layui.form;
+            form.render();
+        });
+    });
+
+    //绑定部门
+    $.get('http://localhost:49233/api/GetEmps', function (data) {
+        $('#Emp_Dept').empty();
+        $.each(data, function (index, item) {
+            var option = '<option value=""></option>';
+            option += '<option value="' + item.emp_Dept + '">' + item.emp_Dept + '</option>';
+            $('#Emp_Dept').append(option);
+        })
+        layui.use('form', function () {
+            var form = layui.form;
+            form.render();
+        });
+    });
+
+    layui.use(['element', 'layer', 'table', 'laypage', 'laydate'], function () {
+        var element = layui.element;
+        var layer = layui.layer;
+        var table = layui.table
+        var laydate = layui.laydate;
+
+        //日期范围
+        laydate.render({
+            elem: '#txt_date'
+            , range: true
+        });
+        //第一个实例
+        table.render({
+            elem: '#table1'
+            , height: 500
+            //, toolbar: '#toolbar' //开启头部工具栏，并为其绑定左侧模板
+            , url: 'http://localhost:49233/api/GetVisit' //数据接口
+            , page: true //开启分页
+            , cols: [[ //表头
+                { type: 'checkbox', fixed: 'left' }
+                , { field: 'Customer_Name', title: '客户名称', width: 120, edit: 'text' }
+                , { field: 'Responsible_Name', title: '负责人', width: 120, edit: 'text' }
+                , { field: 'Wai_Count', title: '外勤签到次数', width: 80, edit: 'text', sort: true }
+                , { field: 'All_Count', title: '总拜访次数', width: 100 }
+                , { field: 'Abnormal_Count', title: '距离异常次数', width: 80, sort: true }
+            ]]
+
+            , parseData: function (res) { //res 即为原始返回的数据
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": res.count, //解析数据长度
+                    "data": res.data //解析数据列表
+                };
+            },
+            id: "TableReload" 
+        });
+
+        //查询
+        var $ = layui.$, active = {
+            reload: function () {
+                var datestr = $("#txt_date").val();
+                var KeHu_Name = $("#KeHu_Name").val();
+                var FuZeRen = $("#FuZeRen").val();
+                table.reload("TableReload", {
+                    page: {
+                        curr: 1//重新从1开始
+                    },
+                    where: {
+                        dateTimestr: datestr,
+                        keHu_Name: KeHu_Name,
+                        fuZeRen: FuZeRen
+                    }
+                });
+            }
+        };
+
+        //查询
+        $(".Select .layui-btn").on("click", function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        })
+    });
+
+</script>

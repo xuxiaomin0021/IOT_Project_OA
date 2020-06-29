@@ -14,5 +14,7 @@ namespace IOT_Project_OA.DAL.IDAL.ILoginDal
         List<Base_User> GetUserList();
         int Delete(Base_User user);
 
+
+
     }
 }

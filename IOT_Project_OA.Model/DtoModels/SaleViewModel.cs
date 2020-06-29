@@ -1,11 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
 namespace IOT_Project_OA.Model
 {
-    public class Base_Sale_Manager
+    public class SaleViewModel
     {
         public Guid Sale_ID { get; set; }
         public Guid Business_ID { get; set; }
@@ -21,6 +20,5 @@ namespace IOT_Project_OA.Model
         public string Visit_Name { get; set; }
         public string Contact_Name { get; set; }
         public string Agent_Name { get; set; }
-        public Guid Record_ID { get; set; }
     }
 }

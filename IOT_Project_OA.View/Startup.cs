@@ -46,7 +46,7 @@ namespace IOT_Project_OA.View
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Default}/{action=MyDeskTop}/{id?}");
+                    pattern: "{controller=Default}/{action=Login}/{id?}");
             });
         }
     }

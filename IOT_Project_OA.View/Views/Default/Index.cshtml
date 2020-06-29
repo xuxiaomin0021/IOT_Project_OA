@@ -82,10 +82,233 @@
 
                     <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
                         <li data-name="component" class="layui-nav-item">
-                            <a href="javascript:;" lay-tips="我的桌面"  lay-direction="2">
+                            <a href="javascript:;" lay-tips="我的桌面" lay-direction="2">
                                 <i class="layui-icon layui-icon-component"></i>
                                 <cite lay-href="/Default/MyDeskTop">我的桌面</cite>
                             </a>
+                        </li>
+                        <li data-name="home" class="layui-nav-item layui-nav-itemed">
+                            <a href="javascript:;" lay-tips="客户管理" lay-direction="2">
+                                <i class="layui-icon layui-icon-home"></i>
+                                <cite>客户管理</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd data-name="grid" data-jump="" class="layui-nav-itemed">
+                                    <a href="javascript:;">客户信息详情<span class="layui-nav-more"></span></a>
+                                    <dl class="layui-nav-child">
+                                        <dd data-name="list" data-jump="">
+                                            <a href="javascript:;" lay-href="/Default/Show">客户商机信息</a>
+                                        </dd>
+                                        <dd data-name="mobile" data-jump="">
+                                            <a href="javascript:;" lay-href="component/grid/mobile">客户拜访信息</a>
+                                        </dd>
+                                    </dl>
+                                </dd>
+                                <dd data-name="console">
+                                    <a lay-href="/business">新增客户</a>
+                                </dd>
+                                <dd data-name="grid" data-jump="" class="layui-nav-itemed">
+                                    <a href="javascript:;">商机管理<span class="layui-nav-more"></span></a>
+                                    <dl class="layui-nav-child">
+                                        <dd data-name="list" data-jump="">
+                                            <a href="javascript:;" lay-href="component/grid/list">新增商机</a>
+                                        </dd>
+                                        <dd data-name="mobile" data-jump="">
+                                            <a href="javascript:;" lay-href="component/grid/mobile">客户商机信息</a>
+                                        </dd>
+                                    </dl>
+                                </dd>
+
+                            </dl>
+                        </li>
+                        <li data-name="component" class="layui-nav-item">
+                            <a href="javascript:;" lay-tips="销售管理" lay-direction="2">
+                                <i class="layui-icon layui-icon-component"></i>
+                                <cite>销售管理</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd data-name="panel">
+                                    <a lay-href="/VisitPlan">拜访计划管理</a>
+                                </dd>
+                                <dd data-name="badge">
+                                    <a lay-href="/VisitData">拜访数据统计</a>
+                                </dd>
+                                <dd data-name="timeline">
+                                    <a lay-href="/WorkIn">外勤签到管理</a>
+                                </dd>
+                                <dd data-name="timeline">
+                                    <a lay-href="/WorkInData">外勤签到统计</a>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li data-name="component" class="layui-nav-item">
+                            <a href="javascript:;" lay-tips="资产管理" lay-direction="2">
+                                <i class="layui-icon layui-icon-component"></i>
+                                <cite>资产管理</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd data-name="panel">
+                                    <a lay-href="/AssetFiles">新增资产</a>
+                                </dd>
+                                <dd data-name="panel">
+                                    <a lay-href="/AssetFiles">资产详情</a>
+                                </dd>
+
+                                <dd data-name="grid" data-jump="" class="layui-nav-itemed">
+                                    <a href="javascript:;">资产分类<span class="layui-nav-more"></span></a>
+                                    <dl class="layui-nav-child">
+                                        <dd data-name="list" data-jump="">
+                                            <a href="javascript:;" lay-href="component/grid/list">添加</a>
+                                        </dd>
+                                        <dd data-name="mobile" data-jump="">
+                                            <a href="javascript:;" lay-href="component/grid/mobile">修改</a>
+                                        </dd>
+                                        <dd data-name="mobile" data-jump="">
+                                            <a href="javascript:;" lay-href="component/grid/mobile">删除</a>
+                                        </dd>
+                                        <dd data-name="mobile" data-jump="">
+                                            <a href="javascript:;" lay-href="component/grid/mobile">字段管理</a>
+                                        </dd>
+                                    </dl>
+                                </dd>
+
+                                <dd data-name="grid" data-jump="" class="layui-nav-itemed">
+                                    <a href="javascript:;">资产申请<span class="layui-nav-more"></span></a>
+                                    <dl class="layui-nav-child">
+                                        <dd data-name="list" data-jump="">
+                                            <a href="javascript:;" lay-href="component/grid/list">发起资产申请单</a>
+                                        </dd>
+                                    </dl>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li data-name="component" class="layui-nav-item">
+                            <a href="javascript:;" lay-tips="人力资源管理" lay-direction="2">
+                                <i class="layui-icon layui-icon-component"></i>
+                                <cite>人力资源管理</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd data-name="grid" data-jump="" class="layui-nav-itemed">
+                                    <a href="javascript:;">员工档案-新增员工<span class="layui-nav-more"></span></a>
+                                    <dl class="layui-nav-child">
+                                        <dd data-name="list" data-jump="">
+                                            <a href="javascript:;" lay-href="component/grid/list">学习经历</a>
+                                        </dd>
+                                        <dd data-name="mobile" data-jump="">
+                                            <a href="javascript:;" lay-href="component/grid/mobile">工作经历</a>
+                                        </dd>
+                                        <dd data-name="mobile" data-jump="">
+                                            <a href="javascript:;" lay-href="component/grid/mobile">家庭信息</a>
+                                        </dd>
+                                    </dl>
+                                </dd>
+
+                                <dd data-name="grid" data-jump="" class="layui-nav-itemed">
+                                    <a href="javascript:;">组织架构<span class="layui-nav-more"></span></a>
+                                    <dl class="layui-nav-child">
+                                        <dd data-name="list" data-jump="">
+                                            <a href="javascript:;" lay-href="component/grid/list">添加</a>
+                                        </dd>
+                                        <dd data-name="mobile" data-jump="">
+                                            <a href="javascript:;" lay-href="component/grid/mobile">修改</a>
+                                        </dd>
+                                        <dd data-name="mobile" data-jump="">
+                                            <a href="javascript:;" lay-href="component/grid/mobile">删除</a>
+                                        </dd>
+                                    </dl>
+                                </dd>
+
+                                <dd data-name="grid" data-jump="" class="layui-nav-itemed">
+                                    <a href="javascript:;">权限管理<span class="layui-nav-more"></span></a>
+                                    <dl class="layui-nav-child">
+                                        <dd data-name="list" data-jump="">
+                                            <a href="javascript:;" lay-href="component/grid/list">创建用户</a>
+                                        </dd>
+                                        <dd data-name="mobile" data-jump="">
+                                            <a href="javascript:;" lay-href="component/grid/mobile">用户授权</a>
+                                        </dd>
+                                    </dl>
+                                </dd>
+
+                                <dd data-name="grid" data-jump="" class="layui-nav-itemed">
+                                    <a href="javascript:;">角色管理<span class="layui-nav-more"></span></a>
+                                    <dl class="layui-nav-child">
+                                        <dd data-name="list" data-jump="">
+                                            <a href="javascript:;" lay-href="component/grid/list">创建角色</a>
+                                        </dd>
+                                    </dl>
+                                </dd> 
+                            </dl>
+                        </li>
+                        <li data-name="template" class="layui-nav-item">
+                            <a href="javascript:;" lay-tips="页面" lay-direction="2">
+                                <i class="layui-icon layui-icon-template"></i>
+                                <cite>页面</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd><a lay-href="template/personalpage.html">个人主页</a></dd>
+                                <dd><a lay-href="template/addresslist.html">通讯录</a></dd>
+                                <dd><a lay-href="template/goodslist.html">商品列表</a></dd>
+                                <dd><a lay-href="template/msgboard.html">留言板</a></dd>
+                                <dd><a lay-href="template/search.html">搜索结果</a></dd>
+                                <dd><a href="user/reg.html" target="_blank">注册</a></dd>
+                                <dd><a href="user/login.html" target="_blank">登入</a></dd>
+                                <dd><a href="user/forget.html" target="_blank">忘记密码</a></dd>
+                                <dd><a lay-href="template/tips/404.html">404页面不存在</a></dd>
+                                <dd><a lay-href="template/tips/error.html">错误提示</a></dd>
+                                <dd><a lay-href="http://www.baidu.com/">百度一下</a></dd>
+                                <dd><a lay-href="http://www.layui.com/">layui官网</a></dd>
+                                <dd><a lay-href="http://www.layui.com/admin/">layuiAdmin官网</a></dd>
+                            </dl>
+                        </li>
+                        <li data-name="app" class="layui-nav-item">
+                            <a href="javascript:;" lay-tips="应用" lay-direction="2">
+                                <i class="layui-icon layui-icon-app"></i>
+                                <cite>应用</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+
+                                <dd data-name="content">
+                                    <a href="javascript:;">内容系统</a>
+                                    <dl class="layui-nav-child">
+                                        <dd data-name="list"><a lay-href="app/content/list.html">文章列表</a></dd>
+                                        <dd data-name="tags"><a lay-href="app/content/tags.html">分类管理</a></dd>
+                                        <dd data-name="comment"><a lay-href="app/content/comment.html">评论管理</a></dd>
+                                    </dl>
+                                </dd>
+                                <dd data-name="forum">
+                                    <a href="javascript:;">社区系统</a>
+                                    <dl class="layui-nav-child">
+                                        <dd data-name="list"><a lay-href="app/forum/list.html">帖子列表</a></dd>
+                                        <dd data-name="replys"><a lay-href="app/forum/replys.html">回帖列表</a></dd>
+                                    </dl>
+                                </dd>
+                                <dd>
+                                    <a lay-href="app/message/index.html">消息中心</a>
+                                </dd>
+                                <dd data-name="workorder">
+                                    <a lay-href="app/workorder/list.html">工单系统</a>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li data-name="senior" class="layui-nav-item">
+                            <a href="javascript:;" lay-tips="高级" lay-direction="2">
+                                <i class="layui-icon layui-icon-senior"></i>
+                                <cite>高级</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd>
+                                    <a layadmin-event="im">LayIM 通讯系统</a>
+                                </dd>
+                                <dd data-name="echarts">
+                                    <a href="javascript:;">Echarts集成</a>
+                                    <dl class="layui-nav-child">
+                                        <dd><a lay-href="senior/echarts/line.html">折线图</a></dd>
+                                        <dd><a lay-href="senior/echarts/bar.html">柱状图</a></dd>
+                                        <dd><a lay-href="senior/echarts/map.html">地图</a></dd>
+                                    </dl>
+                                </dd>
+                            </dl>
                         </li>
                     </ul>
                 </div>
@@ -128,8 +351,9 @@
     </div>
 
     <script src="../layuiadmin/layui/layui.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
     <script>
-       
+
         layui.config({
             base: '../layuiadmin/' //静态资源所在路径
         }).extend({
@@ -137,9 +361,33 @@
         }).use('index');
 
         var li = '';
+        var quan = '';
         //页面加载
 
         $(function () {
+            var token = localStorage["User_Name"];
+
+            $.ajax({
+                url: "http://localhost:49233/api/UserLogin/Menus",
+                type: "get",
+                async: false,
+                dataType: "text",
+                data: { token: token }
+            }).done(function (data) {
+                if (data == null) {
+                    alert('请先登录!');
+                    location.href = "Default/Login";
+                    return;
+                }
+                quan = data;
+               
+            });
+            FinOne();
+
+
+        });
+
+        function FinOne() {
 
             $.ajax({
                 url: "http://localhost:49233/api/Desk/GetQuan",
@@ -164,12 +412,15 @@
                     li += '<dl class="layui-nav-child">';
                     FindTwo(t.id);
                     li += '</dl></dd></dl></li>';
-                    $("#LAY-system-side-menu").append(li);
+                    if (quan.search(t.menu_Name) != -1) {
+                        $("#LAY-system-side-menu").append(li);
+                    } else {
+                    }
+
                 });
 
             });
-
-        });
+        }
 
         function FindTwo(id) {
             //循环查找第二级菜单
@@ -191,7 +442,7 @@
                 $.each(result, function (i, t) {
                     //t.menu_Url
                     li += '<dd data-name="grid" data-jump="" class="layui-nav-itemed">';
-                   // li += '<a href="javascript:;" onclick="Location(\'' + t.menu_Url+'\')" >' + t.menu_Name + '<span class="layui-nav-more"></span></a>';
+                    // li += '<a href="javascript:;" onclick="Location(\'' + t.menu_Url+'\')" >' + t.menu_Name + '<span class="layui-nav-more"></span></a>';
                     //li += '<dl class="layui-nav-child">';
                     li += '<a href="javascript:;" lay-href="' + t.menu_Url + '"   >' + t.menu_Name + '<span class="layui-nav-more"  ></span></a>';
                     li += '<dl class="layui-nav-child"   >';

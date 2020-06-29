@@ -4,7 +4,9 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Principal;
+using System.Text;
 using System.Threading.Tasks;
+using IOT_Project_OA.BLL;
 using IOT_Project_OA.BLL.IBLL.ILoginBLL;
 using IOT_Project_OA.DAL;
 using IOT_Project_OA.Model;
@@ -29,17 +31,27 @@ namespace IOT_Project_OA.API.Controllers.UserLogin
     {
         JWTHelper WTHelper = new JWTHelper();
         private readonly ILoginBll loginBll;
-        public UserLoginController(ILoginBll _loginBll)
+        private IRegisterBLL bll;
+
+        /// <summary>
+        /// 依赖注入
+        /// </summary>
+        /// <param name="_loginBll"></param>
+        /// <param name="_bll"></param>
+        public UserLoginController(ILoginBll _loginBll, IRegisterBLL _bll)
         {
             loginBll = _loginBll;
+            bll = _bll;
         }
+
+
         /// <summary>
         /// 登录
         /// </summary>
         /// <returns></returns>
         /// 
         [HttpPost]
-        public string Login([FromForm]Base_User model)
+        public string Login([FromForm] Base_User model)
         {
             try
             {
@@ -47,7 +59,7 @@ namespace IOT_Project_OA.API.Controllers.UserLogin
                 Base_User user = loginBll.Select(model);
                 //判断得到的数据是否为空，为空跳转注册
                 if (user != null)
-                { 
+                {
                     //定义字典存放用户登录的信息
                     Dictionary<string, object> keys = new Dictionary<string, object>();
                     keys.Add("User_Name", user.User_Name);
@@ -70,13 +82,47 @@ namespace IOT_Project_OA.API.Controllers.UserLogin
                 throw;
             }
         }
+
+
+        [HttpGet]
+        public async Task<string> Menus(string token)
+        {
+            string json = WTHelper.GetPayload(token);
+            Base_User model = JsonConvert.DeserializeObject<Base_User>(json);
+            if (model == null)
+            {
+                return null;
+            };
+            List<Base_User> uList = await Task.Run(() => { return bll.GetUserList(); });
+            List<Base_Quan> qList = await Task.Run(() => { return bll.GetQuanList(); });
+            List<Base_Role> rList = await Task.Run(() => { return bll.GetRoleList(); });
+            List<Base_RoleAndUser> urList = await Task.Run(() => { return bll.GetUandRList(); });
+            List<Base_QuanAndRole> qrList = await Task.Run(() => { return bll.GetQandRList(); });
+            var list = (from u in uList
+                           join ur in urList on u.User_ID equals ur.User_ID
+                           join r in rList on ur.Role_ID equals r.ID
+                           join qr in qrList on r.ID equals qr.Role_ID
+                           join q in qList on qr.Quan_ID equals q.ID where u.User_Name == model.User_Name
+                           select new
+                           {
+                               menuName = q.Menu_Name
+                           }).ToList();
+            StringBuilder stringBuilder = new StringBuilder();
+            foreach (var item in list)
+            {
+                stringBuilder.Append(item.menuName + ",");
+            }
+            string menus = stringBuilder.ToString().Substring(0, stringBuilder.Length - 1);
+            return menus;
+        }
+
         /// <summary>
         /// 注册
         /// </summary>
         /// <returns></returns>
         /// 
         [HttpPost]
-        public int Register([FromForm]Base_User model)
+        public int Register([FromForm] Base_User model)
         {
             try
             {

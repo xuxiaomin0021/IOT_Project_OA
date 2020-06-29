@@ -12,5 +12,7 @@ namespace IOT_Project_OA.DAL.IDAL.ILoginDal
         //授权
         int Add(Base_User user);
 
+
+
     }
 }

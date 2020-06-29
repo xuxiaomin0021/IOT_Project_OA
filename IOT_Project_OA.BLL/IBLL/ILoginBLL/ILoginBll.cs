@@ -13,6 +13,6 @@ namespace IOT_Project_OA.BLL.IBLL.ILoginBLL
         Base_User Select(Base_User user);
         //授权
         int Add(Base_User user);
-
+        List<Base_User> GetUserList();
     }
 }

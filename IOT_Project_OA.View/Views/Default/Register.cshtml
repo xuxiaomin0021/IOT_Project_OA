@@ -52,7 +52,10 @@
                 <input type="password" id="Againpassword" placeholder="请再次输入密码" autocomplete="off" class="input">
             </div>
         </div>
-      
+        @*<div class="layui-form-item">
+                <label class="layui-form-label">角色选择</label>
+                <div class="layui-input-block" id="role"></div>
+            </div>*@
         <div class="layui-form-item">
             <div class="layui-input-block">
                 <button type="button" id="btn_Register" class="layui-btn" lay-submit="" lay-filter="demo1">下一步</button>
@@ -60,7 +63,8 @@
             </div>
         </div>
     </div>
-   
+    @*<img src="~/Images/Register.png" style=" width: 100%;
+        height: 100%;" />*@
 </body>
 </html>
 <script>
@@ -76,54 +80,95 @@
             .css("top", iTop)
             .css("left", iLeft)
     });
-   
-    //跳转到登录页面
+    //取消跳转到登录页面
     $('#btn_Login').click(function () {
         window.location.href = "/Default/Login";
     })
-    //开始注册
-    $('#btn_Register').click(function () {
-        var obj = {
-            "User_Name": $('#username').val(),
-            "User_Pwd": $('#password').val(),
-            // "roles": roles
-        };
 
-        if (obj.User_Name == null || obj.User_Name == "" || obj.User_Name == undefined) {
+    var username = document.getElementById("username");
+    var password = document.getElementById("password");
+    var Againpassword = document.getElementById("Againpassword");
+    username.onblur = function () {
+        if ($('#username').val() == null || $('#username').val() == "" || $('#username').val() == undefined) {
             alert("用户名不能为空");
-            return;
+            return false;
         }
+        var n = /[\u4e00-\u9fa5]/;
+        if (!n.test($('#username').val())) {
+            alert("用户名必须为中文");
+            return false;
+        }
+        ChekUserName();
+    }
 
-        var p = new RegExp(/(?!^bai\d+$)(?!^[a-zA-Z]+$)[0-9a-zA-Z]{4,23}(?!^\d + $)/);
-        if (!p.test(obj.User_Pwd)) {
-            alert("密码必须是数字和字母组合");
-            return;
-        }
-        var Againpassword = $('#Againpassword').val();
-        if (Againpassword != obj.User_Pwd) {
-            alert("两次输入的密码不一致");
-        }
+    //用户名判断是否存在
+    function ChekUserName() {
         $.ajax({
-            url: 'http://localhost:49233/api/UserLogin/Register',
+            url: 'http://localhost:49233/api/UserLogin/CheckUserName?User_Name=' + $('#username').val(),
             type: 'post',
             dataType: 'text',
             contentType: 'application/x-www-form-urlencoded',
             accepts: 'application/x-www-form-urlencoded',
-            data: obj,
             success: function (data) {
-                if (data > 0) {
-                    alert("注册用户成功,请进行角色授权");
-                    var user_Name = $('#username').val();
-                    window.location.href = "/Default/RegisterUserAndRole?user_Name=" + user_Name;
-                } else {
-                    alert("注册失败!");
+                if (data == 2) {
+                    alert("改用户已存在!");
                     return;
+                } else if (data == 0) {
+                    alert("用户名不能为空");
+                    return;
+                } else {
+                    password.onblur = function () {
+                        var p = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{5,16}$/;
+                        if (!p.test($('#password').val())) {
+                            alert("密码必须是5哒16位的数字和字符的组合");
+                            return false;
+                        }
+                    }
+                    Againpassword.onblur = function () {
+                        //var Againpassword = $('#Againpassword').val();
+                        if ($('#Againpassword').val() != $('#password').val()) {
+                            alert("两次输入的密码不一致");
+                            return false;
+                        }
+                    }
+                    RegisterUser();
                 }
             }
 
         })
-    })
+    }
+    //开始注册
+    function RegisterUser() {
+        $('#btn_Register').click(function () {
+            var obj = {
+                "User_Name": $('#username').val(),
+                "User_Pwd": $('#password').val(),
+            };
+            //用户注册
+            //alert("success");
+            $.ajax({
+                url: 'http://localhost:49233/api/UserLogin/Register',
+                type: 'post',
+                dataType: 'text',
+                contentType: 'application/x-www-form-urlencoded',
+                accepts: 'application/x-www-form-urlencoded',
+                data: obj,
+                success: function (data) {
+                    if (data == 1) {
+                        alert("用户注册成功,角色注册!");
+                        window.location.href = "/Default/Login";
+                    } else if (data == 2) {
+                        alert("改用户已存在!");
+                        return;
+                    } else {
+                        alert("用户注册失败");
+                        return;
+                    }
+                }
 
+            })
+        })
+    }
 </script>
 
 

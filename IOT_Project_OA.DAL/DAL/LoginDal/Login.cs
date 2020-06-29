@@ -26,6 +26,11 @@ namespace IOT_Project_OA.DAL.DAL.LoginDal
 
         }
 
+        public List<Base_User> GetUserList()
+        {
+            return helper.GetToList<Base_User>();
+        }
+
         //获取登录数据
         public Base_User Select(Base_User user)
         {
@@ -33,6 +38,6 @@ namespace IOT_Project_OA.DAL.DAL.LoginDal
             return list;
 
         }
-        
+
     }
 }

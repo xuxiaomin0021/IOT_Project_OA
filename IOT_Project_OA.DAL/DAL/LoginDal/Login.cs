@@ -26,6 +26,11 @@ namespace IOT_Project_OA.DAL.DAL.LoginDal
 
         }
 
+        public int Delete(Base_User user)
+        {
+            return helper.SingerAndBatchDeleteTable("Dele_Table", "Base_User", "User_ID", user.User_ID.ToString());
+        }
+
         public List<Base_User> GetUserList()
         {
             return helper.GetToList<Base_User>();

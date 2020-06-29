@@ -56,7 +56,7 @@ namespace IOT_Project_OA.API.Controllers.UserLogin
                     //得到toekn，给他失效时间 
                     string token = await Task.Run(() => { return WTHelper.GetToken(keys, 30000); });
                     //登录成功  
-                    return token; 
+                    return token;
                 }
                 else
                 {
@@ -142,6 +142,35 @@ namespace IOT_Project_OA.API.Controllers.UserLogin
                 throw;
             }
         }
+        /// <summary>
+        /// 取消角色配置是同时删除该条用户信息
+        /// </summary>
+        /// <param name="user_Name"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public int DeleteUser(string user_Name)
+        {
+            if (!string.IsNullOrEmpty(user_Name))
+            {
+                List<Base_User> list = loginBll.GetUserList();
+                var lst = list.Where(m => m.User_Name.Equals(user_Name)).FirstOrDefault();
+                var delUser = list.Where(m => m.User_ID.Equals(lst.User_ID)).FirstOrDefault();
+                int h = loginBll.Delete(delUser);
+                if (h > 0)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            else
+            {
+                return 0;
+            }
 
+
+        }
     }
 }

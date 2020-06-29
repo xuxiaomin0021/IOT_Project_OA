@@ -31,7 +31,7 @@ namespace IOT_Project_OA.View.Controllers
 
         public IActionResult RegisterUserAndRole(string user_Name)
         {
-            ViewBag.user_Name = user_Name;
+            ViewBag.user_Name = user_Name; 
             return View();
         }
 

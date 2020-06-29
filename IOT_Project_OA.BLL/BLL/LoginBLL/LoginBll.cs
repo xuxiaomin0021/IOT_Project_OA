@@ -22,6 +22,11 @@ namespace IOT_Project_OA.BLL.BLL.LoginBLL
             return login.Add(user);
         }
 
+        public int Delete(Base_User user)
+        {
+            return login.Delete(user);
+        }
+
         public List<Base_User> GetUserList()
         {
             return login.GetUserList();

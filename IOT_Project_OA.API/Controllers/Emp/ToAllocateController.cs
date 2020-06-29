@@ -96,8 +96,7 @@ namespace IOT_Project_OA.API.Controllers.Emp
                 User_ID = user.User_ID
             };
             return bll.AddUserAndRole(m);
-        }
-
+        } 
         /// <summary>
         /// 获取数据库中角色和权限的四个属性
         /// </summary>

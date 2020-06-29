@@ -88,14 +88,14 @@
             alert("用户名不能为空");
             return false;
         }
-        var n = /[\u4e00-\u9fa5]/;
+       // var n = /[\u4e00-\u9fa5]/;
+        var n = /^[\u4e00-\u9fa5|a-zA-Z]+$/;
         if (!n.test($('#username').val())) {
-            alert("用户名必须为中文");
+            alert("用户名必须为中文,英文,或者为中英文组合");
             return false;
         }
         ChekUserName();
-    }
-
+    } 
     //用户名判断是否存在
     function ChekUserName() {
         $.ajax({
@@ -151,7 +151,7 @@
                 success: function (data) {
                     if (data == 1) {
                         alert("用户注册成功,角色注册!");
-                        window.location.href = "/Default/Login";
+                        window.location.href = "http://localhost:49236/Default/RegisterUserAndRole?user_Name=" + $('#username').val();
                     } else if (data == 2) {
                         alert("改用户已存在!");
                         return;

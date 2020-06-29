@@ -225,14 +225,15 @@ namespace IOT_Project_OA.DAL
             {
                 Type t = model.GetType();
                 PropertyInfo[] property = t.GetProperties();
-                string sql = $"delete from {t.Name} ";
-                foreach (var item in property)
-                {
+                string sql = $"delete from {t.Name}";
+                foreach (PropertyInfo item in property)
+                { 
                     if (!string.IsNullOrEmpty(item.GetValue(model).ToString()))
-                    {
+                    {  
                         sql += $" where {item.Name} = '{item.GetValue(model)}'";
-                    }
+                    } 
                 }
+                
                 return conn.Execute(sql);
             }
         }

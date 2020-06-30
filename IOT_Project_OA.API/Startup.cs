@@ -57,6 +57,15 @@ namespace IOT_Project_OA.API
             //×Ê²úµµ°¸
             services.AddSingleton<FilesclassIBLL, FilesclassBLL>();
             services.AddSingleton<FilesIBLL, FilesBLL>();
+            services.AddSingleton<FilesclassIDAL, FilesclassDAL>();
+            services.AddSingleton<FilesIDAL, FilesDAL>();
+            //µÇÂ¼×¢²á
+            services.AddSingleton<ILogin, Login>();
+            services.AddSingleton<ILoginBll, LoginBll>();
+            services.AddSingleton<IEmpBLLInterface, EmpBLL>();
+            services.AddSingleton<IEmpDAL, EmpDAL>();
+            services.AddSingleton<IRegisterBLL, RegisterBLL>();
+            services.AddSingleton<IRegisterDal, RegisterDal>();
 
         }
 

@@ -16,8 +16,9 @@ namespace IOT_Project_OA.View.Controllers
         /// 我的桌面
         /// </summary>
         /// <returns></returns>
-        public IActionResult MyDeskTop()
+        public IActionResult MyDeskTop(string User_Name)
         {
+            ViewBag.User_Name = User_Name;
             return View();
         }
         /// <summary>

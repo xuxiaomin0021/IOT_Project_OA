@@ -96,8 +96,7 @@
 
     //取消角色分配的同时删除用户并跳转到登录页面
     $('#btn_Login').click(function () {
-        var user_Name = $('#user_Name').val();
-        alert(user_Name);
+        var user_Name = $('#user_Name').val(); 
         $.ajax({
             url: 'http://localhost:49233/api/UserLogin/DeleteUser?User_Name=' + user_Name,
             type: 'post',
@@ -105,8 +104,7 @@
             contentType: 'application/x-www-form-urlencoded',
             accepts: 'application/x-www-form-urlencoded',
             //data: user_Name,
-            success: function (data) {
-                alert(data);
+            success: function (data) { 
                 if (data > 0) {
                     alert("用户已取消本次角色操作!");
                     location.href = "Login";
@@ -157,9 +155,7 @@
                     return;
                 }
             }
-        });
-
-
+        }); 
     })
 
 </script>

@@ -32,18 +32,10 @@ namespace IOT_Project_OA.DAL
             {
                 Type t = typeof(T);
                 string sql = "";
-                //if (t.Name == "Base_Quan")
-                //{
-                //  sql  = $"select * from {t.Name} where up_id = 0";
-                //}
-                //else
-                //{
-                //    sql = $"select * from {t.Name}";
-               // }
-            sql = $"select * from {t.Name}";
-            return conn.Query<T>(sql).ToList();
+                sql = $"select * from {t.Name}";
+                return conn.Query<T>(sql).ToList();
             }
-        } 
+        }
 
 
         /// <summary>
@@ -86,7 +78,28 @@ namespace IOT_Project_OA.DAL
         /// <param name="orderField">根据id字段进行排序</param>
         /// <param name="PageIndex">页码</param>
         /// <returns></returns>
-        public ProcDataAndTotal<T> GetProcData<T>(string tableName, string whereStr, string orderField, int PageIndex, int pageSize) where T : class, new();
+        public ProcDataAndTotal<T> GetProcData<T>(string tableName, string whereStr, string orderField, int PageIndex, int pageSize) where T : class, new()
+        {
+            using (IDbConnection conn = new SqlConnection() { ConnectionString = connectionString })
+            { 
+                var param = new DynamicParameters();
+                param.Add("@table", tableName);
+                param.Add("@field", "*");
+                param.Add("@where", whereStr);
+                param.Add("@order", orderField);
+                param.Add("@pageSize", pageSize);
+                param.Add("@pageNumber", PageIndex);
+                param.Add("@Total", 0, DbType.Int32, ParameterDirection.Output);
+                //返回的类
+                ProcDataAndTotal<T> dataAndTotal = new ProcDataAndTotal<T>()
+                {
+                    ProcData = conn.Query<T>("SP_Paging1", param, commandType: CommandType.StoredProcedure).ToList(),
+                    Total = param.Get<int>("@Total"),
+                };
+                return dataAndTotal;
+            }
+
+        }
         public ProcDataAndTotal<T> GetProcData<T>(string tableName, string whereStr, string orderField, int PageIndex) where T : class, new()
         {
             using (IDbConnection conn = new SqlConnection() { ConnectionString = connectionString })
@@ -96,19 +109,12 @@ namespace IOT_Project_OA.DAL
                 param.Add("@field", "*");
                 param.Add("@where", whereStr);
                 param.Add("@order", orderField);
-                param.Add("@pageSize", pageSize);
-                param.Add("@pageNumber", PageIndex);
-                param.Add("@Total", 0, DbType.Int32, ParameterDirection.Output);
-                param.Add("@table", tableName);
-                param.Add("@field", "*");
-                param.Add("@where", whereStr);
-                param.Add("@order", orderField);
                 param.Add("@pageSize", 5);
                 param.Add("@pageNumber", PageIndex);
                 param.Add("@Total", 0, DbType.Int32, ParameterDirection.Output);
 
                 //返回的类
-                 ProcDataAndTotal<T> dataAndTotal = new ProcDataAndTotal<T>()
+                ProcDataAndTotal<T> dataAndTotal = new ProcDataAndTotal<T>()
                 {
                     ProcData = conn.Query<T>("SP_Paging1", param, commandType: CommandType.StoredProcedure).ToList(),
                     Total = param.Get<int>("@Total"),
@@ -183,10 +189,10 @@ namespace IOT_Project_OA.DAL
                     {
                         continue;
                     }
-                    
+
                     stringBuilder.Append($"'{item.GetValue(model)}',");
                 }
-                string sql = stringBuilder.ToString().Substring(0,stringBuilder.Length-1)+")";
+                string sql = stringBuilder.ToString().Substring(0, stringBuilder.Length - 1) + ")";
                 return conn.Execute(sql);
             }
         }
@@ -204,14 +210,105 @@ namespace IOT_Project_OA.DAL
                 PropertyInfo[] property = t.GetProperties();
                 string sql = $"delete from {t.Name}";
                 foreach (PropertyInfo item in property)
-                { 
+                {
                     if (!string.IsNullOrEmpty(item.GetValue(model).ToString()))
-                    {  
+                    {
                         sql += $" where {item.Name} = '{item.GetValue(model)}'";
-                    } 
+                    }
                 }
-                
+
                 return conn.Execute(sql);
+            }
+        }
+        /// <summary>
+        /// 泛型反射添加带标识列可空添加
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public int InsertData<T>(T model) where T : class, new()
+        {
+            using (IDbConnection conn = new SqlConnection() { ConnectionString = connectionString })
+            {
+                //拼接规则
+                //insert into tableName (Id,name,Pwd) values('');
+                Type t = model.GetType();
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.Append($"insert into {t.Name} (");
+                StringBuilder Builder = new StringBuilder();
+                Builder.Append($" values(");
+                PropertyInfo[] property = t.GetProperties();
+                foreach (var item in property)
+                {
+                    if (!item.Name.Equals("User_ID"))
+                    {
+                        stringBuilder.Append($"{item.Name},");
+                        Builder.Append($"'{item.GetValue(model)}',");
+                    }
+                }
+                string sql = stringBuilder.ToString().TrimEnd(',') + ")" + Builder.ToString().TrimEnd(',') + ")";
+                return conn.Execute(sql);
+            }
+        }
+        /// <summary>
+        /// 全能表单删批删存储过程
+        /// </summary>
+        /// <param name="procName">存储过程名称</param>
+        /// <param name="tableName">表名</param>
+        /// <param name="idName">表名的主键ID名</param>
+        /// <param name="deleteIds">要删除的ID</param>
+        /// <returns></returns>
+        public int SingerAndBatchDeleteTable(string procName, string tableName, string idName, string deleteIds)
+        {
+            int code = 0;
+            using (IDbConnection conn = new SqlConnection() { ConnectionString = connectionString })
+            {
+                deleteIds = "'" + deleteIds + "'";
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@tableName", tableName);
+                parameters.Add("@tableID", idName);
+                parameters.Add("@DeleID", deleteIds);
+                code = conn.Execute(procName, parameters, commandType: CommandType.StoredProcedure);
+            }
+            return code;
+        }
+        public int UpdateEmp(string procName, Base_Emp_Information model)
+        {
+            string qian = "'";
+            string hou = "'";
+            model.Emp_Dept = qian + model.Emp_Dept + hou;
+            model.Emp_Post = qian + model.Emp_Post + hou;
+            model.Health = qian + model.Health + hou;
+            model.Phone = qian + model.Phone + hou;
+            string id = qian + model.Emp_ID + hou;
+            int code = 0;
+            using (IDbConnection conn = new SqlConnection() { ConnectionString = connectionString })
+            {
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@updateFile1", model.Emp_Dept);
+                parameters.Add("@updateFile2", model.Emp_Post);
+                parameters.Add("@updateFile3", model.Phone);
+                parameters.Add("@updateFile4", model.Health);
+                parameters.Add("@id", id);
+                code = conn.Execute(procName, parameters, commandType: CommandType.StoredProcedure);
+            }
+            return code;
+
+        }
+        /// <summary>
+        /// 删除的存储过程
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="param"></param>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public int ProcExec<T>(DynamicParameters param, string sql) where T : class, new()
+        {
+            using (IDbConnection conn = new SqlConnection() { ConnectionString = connectionString })
+            {
+                int code = 0;
+                code = conn.Execute(sql, param, commandType: CommandType.StoredProcedure);
+                return code;
             }
         }
     }

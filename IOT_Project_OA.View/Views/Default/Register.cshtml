@@ -85,13 +85,13 @@
     username.onblur = function () {
         if ($('#username').val() == null || $('#username').val() == "" || $('#username').val() == undefined) {
             alert("用户名不能为空");
-            return false;
+            return;
         }
        // var n = /[\u4e00-\u9fa5]/;
         var n = /^[\u4e00-\u9fa5|a-zA-Z]+$/;
         if (!n.test($('#username').val())) {
             alert("用户名必须为中文,英文,或者为中英文组合");
-            return false;
+            return;
         }
         ChekUserName();
     } 
@@ -115,14 +115,14 @@
                         var p = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{5,16}$/;
                         if (!p.test($('#password').val())) {
                             alert("密码必须是5哒16位的数字和字符的组合");
-                            return false;
+                            return;
                         }
                     }
                     Againpassword.onblur = function () {
                         //var Againpassword = $('#Againpassword').val();
                         if ($('#Againpassword').val() != $('#password').val()) {
                             alert("两次输入的密码不一致");
-                            return false;
+                            return;
                         }
                     }
                     RegisterUser();
@@ -149,8 +149,8 @@
                 data: obj,
                 success: function (data) {
                     if (data == 1) {
-                        alert("用户注册成功,角色注册!");
-                        window.location.href = "http://localhost:49236/Default/RegisterUserAndRole?user_Name=" + $('#username').val();
+                        alert("用户注册成功,角色注册!"); 
+                        window.location.href = "/Default/RegisterUserAndRole?user_Name=" + $('#username').val();
                     } else if (data == 2) {
                         alert("改用户已存在!");
                         return;

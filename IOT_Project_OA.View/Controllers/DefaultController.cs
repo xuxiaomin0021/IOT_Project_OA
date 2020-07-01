@@ -8,8 +8,9 @@ namespace IOT_Project_OA.View.Controllers
 {
     public class DefaultController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index(string User_Name)
         {
+            ViewBag.User_Name = User_Name;
             return View();
         }
         /// <summary>
@@ -32,7 +33,7 @@ namespace IOT_Project_OA.View.Controllers
 
         public IActionResult RegisterUserAndRole(string user_Name)
         {
-            ViewBag.user_Name = user_Name; 
+            ViewBag.user_Name = user_Name;
             return View();
         }
 

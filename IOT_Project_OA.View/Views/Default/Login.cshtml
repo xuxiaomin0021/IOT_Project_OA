@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    <title>OA办公系统</title>
     <meta charset="UTF-8">
     <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
     <link href="~/layuiadmin/style/admin.css" rel="stylesheet" />
@@ -77,7 +78,7 @@
                                 <input type="button" class="layui-btn" lay-submit="" onclick="Registerdate()" value="注 册" />
                             </div>
                             <div>
-                                <br />用户名/密码<label>Admin/123456&nbsp;&nbsp;&nbsp;System/123456&nbsp;&nbsp;&nbsp;Test/Test</label>
+                                <br />用户名/密码<label>Admin/123456&nbsp;&nbsp;&nbsp;Sun/sunshine&nbsp;&nbsp;&nbsp;Test/Test</label>
                             </div>
                         </div>
                     </form>
@@ -167,7 +168,7 @@
                     var str = storage.getItem("name");
                     localStorage["User_Name"] = data;
                     window.location.href = "/Default/MyDeskTop?user_Name=" + str;
-                    window.location.href = "/Default/Index";
+                    window.location.href = "/Default/Index?user_Name="+str;
                 }
                 else {
                     Reload();

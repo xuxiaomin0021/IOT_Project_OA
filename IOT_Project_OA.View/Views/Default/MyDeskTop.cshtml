@@ -125,13 +125,16 @@
         }
 
         .box_heart {
-            width: 720px;
+            width: 1590px;
             height: 520px;
             /*//background-color: aqua;*/
         }
 
         .data_Add {
             margin-top: 50px;
+            width: 687px;
+            height: 410px;
+            /*background-color:aquamarine;*/
         }
 
         .Sale {
@@ -143,7 +146,8 @@
 
         .play {
             font-size: 16px;
-            color: darkorange;
+            width: 1450px;
+            /*//color: darkorange;*/
         }
 
         .number {
@@ -203,6 +207,27 @@
             border: 1px solid #6ac13c;
             background: #e9f8df; /*浅绿色背景*/
         }
+
+        .layui-tab-item layui-show {
+            width: 720px;
+        }
+
+        .box_data {
+            float: left;
+            /*//background-color: blanchedalmond;*/
+            margin-left: 167px;
+        }
+
+        .login_Name {
+            padding-left: 25px;
+            padding-top: 25px;
+            font-size: 16px;
+        }
+
+        .calendar {
+            width: 1450px;
+            height: 470px;
+        }
     </style>
     <meta charset="utf-8">
     <title>Layui</title>
@@ -211,34 +236,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
-    <script>
 
-        //页面刚加载的时候，开始判断，如果有用户名，就显示在页面上，如果没有用户名的话，就显示登录名称
-            $(function () {
-            var storage = window.sessionStorage;
-                var str = "@ViewBag.User_Name";
-                if (str == null || str == "" || str == undefined) {
-                        $("#uname").html("[未登录]");
-                        window.location.href = "/Default/Login";
-            } else {
-                $("#uname").html("欢迎:【"+str+"】");
-            }
-            })
-    </script>
 </head>
 <body>
-
     <div class="AllDiv">
         <div class="div2">
             <div class="div1">
-                <a href="/Default/Login" id="login">
-                    <span id="uname" name="text"></span>
+                <a href="#" id="login">
+                    <img class="img" src="~/Images/6.png" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;<label class="lab">
+                        <span id="uname" class="login_Name" name="text">
+                        </span>
+                    </label>
                 </a>
             </div>
             <div class="div3">
-                <a href="/Default/MyDeskTop">
+                <a href="#" id="login_user">
                     <img class="img" src="~/Images/1.png" />
-                    <label class="lab">&nbsp;我的桌面</label>
+                    <label class="lab">&nbsp;我的桌面<span hidden="hidden" id="uname" class="login_Name" name="text"></span></label>
                 </a>
             </div>
             <div class="div3">
@@ -272,10 +287,11 @@
                 </a>
             </div>
             <div class="div5">
-                <a href="#">
+                <a href="#" id="reset">
                     <img class="img1" src="~/Images/8.png" /><br />
                     <label class="lab">&nbsp;更多</label>
                 </a>
+
             </div>
         </div>
         <div class="layui-tab">
@@ -290,12 +306,16 @@
                             <div id="u2095_div" class="img2">
                                 <div class="box_4">
                                     <div class="box_5">
-                                        <img class="img3" src="~/Images/2.png" />
-                                        <br />
-                                        <label style="float:left;font-size:16px;" href="/SaleAdmin/SaleAdd">拜访客户</label>
+                                        <a href="/SaleAdmin/SaleAdd">
+                                            <img class="img3" src="~/Images/2.png" />
+                                            <br />
+                                            <label style="float:left;font-size:16px;">拜访客户</label>
+                                        </a>
                                     </div>
                                     <div class="box_6">
-                                        <span class="number">66</span>
+                                        <a href="#">
+                                            <span class="number">66</span>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -304,23 +324,40 @@
                             <div id="u2095_div" class="img2">
                                 <div class="box_4">
                                     <div class="box_5">
-                                        <img class="img3" src="~/Images/2.png" />
-                                        <br />
-                                        <label style="float:left;font-size:16px;">获取 商机</label>
+                                        <a href="">
+                                            <img class="img3" src="~/Images/2.png" />
+                                            <br />
+                                            <label style="float:left;font-size:16px;">获取 商机</label>
+                                        </a>
                                     </div>
                                     <div class="box_6">
-                                        <span class="number">99</span>
+                                        <a href="#">
+                                            <span class="number">99</span>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <br /><br />
+
+                        <div id="u" class="box_data">
+                            <div id="u2095_div" class="img2">
+                                <div class="box_4">
+                                    <div class="box_5">
+                                        <iframe width="800" scrolling="no" height="120" frameborder="0" allowtransparency="true" src="https://i.tianqi.com?c=code&id=19&icon=1&temp=1&num=5&site=12"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+
+                        </div>
+
                         <div id="u" class="box_2">
                             <div class="data_Add">
                                 <br />
                                 <label class="play">本月拜访计划</label><br />
-                                <hr style="border:ridge 1px;" />
-                                <a href="SaleAdmin/SaleAdd" class="Sale"><label>新增一个拜访</label></a>
+                                <hr style="border:ridge 1px;width:696px;" />
+                                <a href="/SaleAdmin/SaleAdd" class="Sale"><label>新增一个拜访</label></a>
                                 <div class="data">
                                     <div class="calendar">
                                         <div class="title">
@@ -348,11 +385,12 @@
                                         </div>
                                     </div>
                                 </div>
+
+
                             </div>
                         </div>
+
                     </div>
-                    <br />
-                    <br>
                 </div>
                 <div class="layui-tab-item">
                     <table class="layui-hide" id="demo" lay-filter="test"></table>
@@ -501,6 +539,68 @@
                     }
                 }
             });
+        })
+
+        layui.use(['element', 'layer', 'table', 'laypage', 'laydate'], function () {
+            var element = layui.element;
+            var layer = layui.layer;
+            var table = layui.table
+            var laydate = layui.laydate;
+            //第一个实例
+            table.render({
+                elem: '#table1'
+                , toolbar: '#toolbar' //开启头部工具栏，并为其绑定左侧模板
+                , url: 'http://localhost:49233/api/GetSaleManagers' //数据接口
+                , parseData: function (res) { //res 即为原始返回的数据
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.msg, //解析提示文本
+                        "count": res.count, //解析数据长度
+                        "data": res.data //解析数据列表
+                    };
+                    $('#number').html(res.count)
+                },
+                id: "TableReload"
+            });
+        });
+
+        //页面刚加载的时候，开始判断，如果有用户名，就显示在页面上，如果没有用户名的话，就显示登录名称
+            $(function () {
+                var storage = window.sessionStorage;
+                var str = "@ViewBag.User_Name";
+                if (str == null || str == "" || str == undefined) {
+                        $("#uname").html("[未登录]");
+                        window.location.href = "/Default/Login";
+            } else {
+                $("#uname").html(str);
+            }
+            })
+        function ClickUanme()
+        {
+            var strName = $('#uname').val(str);
+            if (strName != null || strName != "" || strName != undefined) {
+                alert("您已经登录！");
+                return;
+            } else {
+                $("#uname").html("[未登录]");
+                window.location.href = "/Default/Login";
+            }
+        }
+        $('#login_user').click(function () {
+            ClickUanme();
+        })
+        $('#login').click(function () {
+            ClickUanme();
+        })
+        $('#reset').click(function () {
+            var storage = window.sessionStorage;
+                var str = "";
+                if (str == null || str == "" || str == undefined) {
+                        window.location.href = "/Default/Login";
+            } else {
+                    alert("您已经登录！");
+                    return;
+            }
         })
     </script>
 </body>

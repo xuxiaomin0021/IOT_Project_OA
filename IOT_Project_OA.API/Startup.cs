@@ -66,6 +66,9 @@ namespace IOT_Project_OA.API
             services.AddSingleton<IEmpDAL, EmpDAL>();
             services.AddSingleton<IRegisterBLL, RegisterBLL>();
             services.AddSingleton<IRegisterDal, RegisterDal>();
+            //销售管理
+            services.AddSingleton<SaleaAdminIBLL, SaleaAdminBLL>();
+            services.AddSingleton<SaleaAdminIDAL, SaleaAdminDAL>();
 
         }
 

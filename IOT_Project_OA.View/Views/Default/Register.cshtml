@@ -51,20 +51,14 @@
             <div class="layui-input-block">
                 <input type="password" id="Againpassword" placeholder="请再次输入密码" autocomplete="off" class="input">
             </div>
-        </div>
-        @*<div class="layui-form-item">
-                <label class="layui-form-label">角色选择</label>
-                <div class="layui-input-block" id="role"></div>
-            </div>*@
+        </div> 
         <div class="layui-form-item">
             <div class="layui-input-block">
                 <button type="button" id="btn_Register" class="layui-btn" lay-submit="" lay-filter="demo1">下一步</button>
                 <button type="button" id="btn_Login" class="layui-btn layui-btn-primary">取消</button>
             </div>
         </div>
-    </div>
-    @*<img src="~/Images/Register.png" style=" width: 100%;
-        height: 100%;" />*@
+    </div> 
 </body>
 </html>
 <script>
@@ -93,14 +87,14 @@
             alert("用户名不能为空");
             return false;
         }
-        var n = /[\u4e00-\u9fa5]/;
+       // var n = /[\u4e00-\u9fa5]/;
+        var n = /^[\u4e00-\u9fa5|a-zA-Z]+$/;
         if (!n.test($('#username').val())) {
-            alert("用户名必须为中文");
+            alert("用户名必须为中文,英文,或者为中英文组合");
             return false;
         }
         ChekUserName();
-    }
-
+    } 
     //用户名判断是否存在
     function ChekUserName() {
         $.ajax({
@@ -156,7 +150,7 @@
                 success: function (data) {
                     if (data == 1) {
                         alert("用户注册成功,角色注册!");
-                        window.location.href = "/Default/Login";
+                        window.location.href = "http://localhost:49236/Default/RegisterUserAndRole?user_Name=" + $('#username').val();
                     } else if (data == 2) {
                         alert("改用户已存在!");
                         return;

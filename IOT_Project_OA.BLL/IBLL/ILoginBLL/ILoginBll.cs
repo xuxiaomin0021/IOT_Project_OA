@@ -14,5 +14,6 @@ namespace IOT_Project_OA.BLL.IBLL.ILoginBLL
         //授权
         int Add(Base_User user);
         List<Base_User> GetUserList();
+        int Delete(Base_User user);
     }
 }

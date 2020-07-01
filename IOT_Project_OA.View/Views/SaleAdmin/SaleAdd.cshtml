@@ -1,0 +1,211 @@
+﻿
+@{
+    ViewData["Title"] = "SaleAdd";
+}
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/layui-v2.5.6/layui/layui.js"></script>
+<link href="~/layui-v2.5.6/layui/css/layui.css" rel="stylesheet" />
+<style>
+    h4 {
+        text-align: center;
+        font-size: 50pt;
+        font-family: 汉仪中圆简;
+        color: darkturquoise
+    }
+
+    hr {
+        width: 90%;
+        margin: 0 auto;
+        border: 0;
+        height: 2px;
+        background: #333;
+        background-image: linear-gradient(to right, #ccc, #333, #ccc);
+    }
+
+    #jiben {
+        font-weight: bold;
+        font-size: 12pt;
+        margin-left: 85px
+    }
+
+    #zhu {
+        color: grey;
+        margin-left: 1325px;
+    }
+
+    .layui-table {
+        width: 1000px;
+        margin-left: 300px
+    }
+
+    .layui-form-item {
+        margin-left: 600px
+    }
+</style>
+<h4>创建拜访</h4>
+<span id="jiben">基本信息</span>
+<span id="zhu">注：带有"*"必填项</span>
+<hr />
+<form class="layui-form">
+    <table class="layui-table">
+        <tr>
+            <td>客户名称：</td>
+            <td>
+                <div class="layui-input-inline">
+                    <div class="layui-input-block">
+                        <select id="KeHu_ID" lay-verify="required">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>拜访类型：</td>
+            <td>
+                <div class="layui-input-inline">
+                    <div class="layui-input-block">
+                        <select id="BaiFang_Type" lay-verify="required">
+                            <option value=""></option>
+                            <option value="日常拜访" id="option">日常拜访</option>
+                            <option value="临时拜访" id="option">临时拜访</option>
+                            <option value="巡店拜访" id="option">巡店拜访</option>
+                        </select>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>客户经办人：</td>
+            <td>
+                <div class="layui-input-inline">
+                    <div class="layui-input-block">
+                        <select id="KeHu_JinBanRen" lay-verify="required">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>计划日期：</td>
+            <td>
+                <div class="layui-input-inline">
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input" id="plan_date" placeholder="yyyy-MM-dd HH:mm:ss">
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>负责人：</td>
+            <td>
+                <div class="layui-input-inline">
+                    <div class="layui-input-block">
+                        <select id="FuZeRen" lay-verify="required">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>描述：</td>
+            <td>
+                <div class="layui-input-inline">
+                    <div class="layui-input-block">
+                        <textarea id="decs" placeholder="请输入内容" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="formDemo" id="save">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script>
+    //绑定客户下拉框
+    $.get('http://localhost:49233/api/GetCustomer', function (data) {
+        $('#KeHu_ID').empty();
+        $.each(data, function (index, item) {
+            var option = '<option value=""></option>';
+            option += '<option value="' + item.customer_ID + '">' + item.customer_Name + '</option>';
+            $('#KeHu_ID').append(option);
+        })
+        layui.use('form', function () {
+            var form = layui.form;
+            form.render();
+        });
+    });
+    //绑定客户经办人下拉框
+    $.get('http://localhost:49233/api/GetDeal', function (data) {
+        $('#KeHu_JinBanRen').empty();
+        $.each(data, function (index, item) {
+            var option = '<option value=""></option>';
+            option += '<option value="' + item.business_ID + '">' + item.agent_Name + '</option>';
+            $('#KeHu_JinBanRen').append(option);
+        })
+        layui.use('form', function () {
+            var form = layui.form;
+            form.render();
+        });
+    });
+    //绑定负责人下拉框
+    $.get('http://localhost:49233/api/GetDeal', function (data) {
+        $('#FuZeRen').empty();
+        $.each(data, function (index, item) {
+            var option = '<option value=""></option>';
+            option += '<option value="' + item.business_ID + '">' + item.responsible_Name + '</option>';
+            $('#FuZeRen').append(option);
+        })
+        layui.use('form', function () {
+            var form = layui.form;
+            form.render();
+        });
+    });
+    //点击添加按钮事件
+    $('#save').click(function () {
+        var obj = {
+            "Plan_Time": $('#plan_date').val(),
+            "Customer_ID": $('#KeHu_ID').val(),
+            "Visit_Type": $('#BaiFang_Type').val(),
+            "Sale_Desc": $('#decs').val(),
+            "Business_ID": $('#FuZeRen').val(),
+        };
+
+        //通过ajax传到后台
+        $.ajax({
+            url: 'http://localhost:49233/api/InsertSale',
+            type: 'post',
+            data: obj,
+            dataType: 'text',
+            contentType: 'application/x-www-form-urlencoded',
+            accepts: "application/x-www-form-urlencoded",
+            success: function (data) {
+                if (data > 0) {
+                    alert('提交成功');
+                    window.location.href = 'SaleAdmin/SaleShow';
+                }
+                else {
+                    alert('提交失败');
+                    window.location.reload();
+                }
+            }
+        });
+    });
+
+    layui.use(['form','laydate'], function () {
+        var form = layui.form;
+        var laydate = layui.laydate;
+        form.render();
+        //日期时间选择器
+        laydate.render({
+            elem: '#plan_date'
+            , type: 'datetime'
+        });
+    });
+</script>

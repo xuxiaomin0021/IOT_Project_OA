@@ -214,35 +214,25 @@
     <script>
 
         //页面刚加载的时候，开始判断，如果有用户名，就显示在页面上，如果没有用户名的话，就显示登录名称
-        $(function () {
-            var storage = window.localStorage["User_Name"];
-            var data =
-            {
-                uname: "User_Name"
-            }
-            if (data == 0) {
-                $("#laName").show("未登录");
-                $("#uname").html('');
+            $(function () {
+            var storage = window.sessionStorage;
+                var str = "@ViewBag.User_Name";
+                if (str == null || str == "" || str == undefined) {
+                        $("#uname").html("[未登录]");
+                        window.location.href = "/Default/Login";
             } else {
-                var t = JSON.stringify(data);
-                storage.setItem("data", t);
-                var json = storage.setItem("data");
-                var jsonObj = JSON.parse(json);
-                alert(jsonObj);
-                $("#laName").hide();
-                $("#uname").html(jsonObj);
-
+                $("#uname").html("欢迎:【"+str+"】");
             }
-        })
+            })
     </script>
 </head>
-<body onload="load_data()">
+<body>
 
     <div class="AllDiv">
         <div class="div2">
             <div class="div1">
-                <a href="/Default/Login">
-                    欢迎<label id="laName"><span id="uname"></span></label>云办公OA
+                <a href="/Default/Login" id="login">
+                    <span id="uname" name="text"></span>
                 </a>
             </div>
             <div class="div3">
@@ -378,7 +368,6 @@
     <script src="~/layuiadmin/layui/layui.js"></script>
     <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
     <script>
-
         layui.use('element', function () {
             var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
             //监听导航点击

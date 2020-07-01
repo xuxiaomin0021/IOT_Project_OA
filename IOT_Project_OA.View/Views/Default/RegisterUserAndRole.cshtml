@@ -88,22 +88,40 @@
                     tr = '<input type="checkbox" class="checkboxwa" value="' + t.id + '">' + t.role_Name + '';
                     $('#role').append(tr);
                 })
-               
+
             }
         })
     })
 
 
-    //跳转到登录页面
+    //取消角色分配的同时删除用户并跳转到登录页面
     $('#btn_Login').click(function () {
-        window.location.href = "/Default/Login";
+        var user_Name = $('#user_Name').val(); 
+        $.ajax({
+            url: 'http://localhost:49233/api/UserLogin/DeleteUser?User_Name=' + user_Name,
+            type: 'post',
+            dataType: 'text',
+            contentType: 'application/x-www-form-urlencoded',
+            accepts: 'application/x-www-form-urlencoded',
+            //data: user_Name,
+            success: function (data) { 
+                if (data > 0) {
+                    alert("用户已取消本次角色操作!");
+                    location.href = "Login";
+                } else {
+                    alert("取消本次角色操作失败!");
+                    return;
+                }
+            }
+        })
+        
     })
 
     //开始注册
     $('#btn_Register').click(function () {
         //定义变量存储角色ID
         var ids = "";
-       
+
         //遍历给ids赋值
         $.each($(".checkboxwa:checked"), function (index, item) {
             ids += $(item).val() + ",";
@@ -137,9 +155,7 @@
                     return;
                 }
             }
-        });
-
-
+        }); 
     })
 
 </script>

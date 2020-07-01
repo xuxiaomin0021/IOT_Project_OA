@@ -162,9 +162,12 @@
             data: obj,
             success: function (data) {
                 if (data != null) {
+                    var storage = window.sessionStorage;
+                    storage.setItem('name', obj.User_Name);
+                    var str = storage.getItem("name");
                     localStorage["User_Name"] = data;
+                    window.location.href = "/Default/MyDeskTop?user_Name=" + str;
                     window.location.href = "/Default/Index";
-                    alert("登录成功");
                 }
                 else {
                     Reload();

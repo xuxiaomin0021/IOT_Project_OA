@@ -85,7 +85,7 @@
         }
 
         .box_1 {
-            background-color: darkgray;
+            /*background-color: darkgray;*/
             width: 330px;
             height: 126px;
             float: left;
@@ -98,7 +98,7 @@
         }
 
         .box_3 {
-            background-color: darkgray;
+            /*background-color: darkgray;*/
             width: 330px;
             height: 126px;
             float: left;
@@ -125,13 +125,15 @@
         }
 
         .box_heart {
-            width: 720px;
+            width: 1420px;
             height: 520px;
             /*//background-color: aqua;*/
         }
 
         .data_Add {
             margin-top: 50px;
+            width: 720px;
+            height: 520px;
         }
 
         .Sale {
@@ -203,6 +205,23 @@
             border: 1px solid #6ac13c;
             background: #e9f8df; /*浅绿色背景*/
         }
+
+        .layui-tab-item layui-show {
+            width: 720px;
+        }
+
+        .box_data {
+            float: left;
+            /*//background-color: blanchedalmond;*/
+            margin-left: 167px;
+        }
+
+        .login_Name {
+            padding-left:25px;
+            padding-top: 25px;
+            font-size:16px;
+
+        }
     </style>
     <meta charset="utf-8">
     <title>Layui</title>
@@ -215,24 +234,28 @@
 
         //页面刚加载的时候，开始判断，如果有用户名，就显示在页面上，如果没有用户名的话，就显示登录名称
             $(function () {
-            var storage = window.sessionStorage;
+                var storage = window.sessionStorage; 
                 var str = "@ViewBag.User_Name";
                 if (str == null || str == "" || str == undefined) {
                         $("#uname").html("[未登录]");
                         window.location.href = "/Default/Login";
             } else {
-                $("#uname").html("欢迎:【"+str+"】");
+                    $("#uname").html(str);
             }
             })
     </script>
 </head>
-<body>
-
+<body> 
     <div class="AllDiv">
         <div class="div2">
             <div class="div1">
                 <a href="/Default/Login" id="login">
-                    <span id="uname" name="text"></span>
+                    <img class="img" src="~/Images/6.png" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;<label class="lab">
+                        <span id="uname" class="login_Name" name="text">
+                        </span>
+                    </label>
+
                 </a>
             </div>
             <div class="div3">
@@ -314,13 +337,26 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div id="u" class="box_data">
+                            <div id="u2095_div" class="img2">
+                                <div class="box_4">
+                                    <div class="box_5">
+                                        <iframe width="800" scrolling="no" height="120" frameborder="0" allowtransparency="true" src="https://i.tianqi.com?c=code&id=19&icon=1&temp=1&num=5&site=12"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+
+                        </div>
                         <br /><br />
                         <div id="u" class="box_2">
                             <div class="data_Add">
                                 <br />
                                 <label class="play">本月拜访计划</label><br />
                                 <hr style="border:ridge 1px;" />
-                                <a href="SaleAdmin/SaleAdd" class="Sale"><label>新增一个拜访</label></a>
+                                <a href="/SaleAdmin/SaleAdd" class="Sale"><label>新增一个拜访</label></a>
                                 <div class="data">
                                     <div class="calendar">
                                         <div class="title">
